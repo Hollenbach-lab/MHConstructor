@@ -1,0 +1,25 @@
+{
+  "summary": "Filter out reads that have too many clipped bases on either end.",
+  "arguments": [
+    {
+      "summary": "Maximum number of clipped bases on either end of a given read",
+      "name": "--max-clipped-bases",
+      "synonyms": "NA",
+      "type": "int",
+      "required": "no",
+      "fulltext": "",
+      "defaultValue": "1000",
+      "minValue": "-Infinity",
+      "maxValue": "Infinity",
+      "minRecValue": "NA",
+      "maxRecValue": "NA",
+      "kind": "optional",
+      "options": []
+    }
+  ],
+  "description": "Filter out reads where the number of soft-/hard-clipped bases on either end is above a certain threshold.\n\n This filter will filter reads where the number of soft clips on one end of the read is too large.  It does NOT\n check the total number of bases clipped on BOTH ends.  For the purposes of this filter, the count of soft and hard\n clipped bases on either end of a read are combined.\n\n For example, a read with the following cigar strings will be filtered out (given maxClippedBases\u003d1000):\n\n      1500S0000M\n      900H300S50000M\n      1001H50000M\n\n However, this read will NOT be filtered out (given maxClippedBases\u003d1000):\n\n      900S50000M900S\n      150H800S50000M900S150H\n      1000S500M\n      500M1000S\n\n Note: This is designed for use with (unpaired) long reads, but can be used with any reads.",
+  "name": "ExcessiveEndClippedReadFilter",
+  "group": "Read Filters",
+  "beta": false,
+  "experimental": false
+}

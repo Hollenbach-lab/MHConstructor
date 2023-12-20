@@ -1,0 +1,9 @@
+{
+  "summary": "Summary of the haplotype filtering steps.",
+  "arguments": [],
+  "description": "Set of annotations meant to be reflective of HaplotypeFiltering operations that were applied in FlowBased HaplotypeCaller.",
+  "name": "HaplotypeFilteringAnnotation",
+  "group": "Flow Annotations",
+  "beta": false,
+  "experimental": false
+}

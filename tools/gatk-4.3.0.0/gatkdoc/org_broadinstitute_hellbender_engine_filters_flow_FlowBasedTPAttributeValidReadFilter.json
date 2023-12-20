@@ -1,0 +1,25 @@
+{
+  "summary": "Filter out flow reads that have invalid TP values",
+  "arguments": [
+    {
+      "summary": "maxHmer to use for testing in the filter",
+      "name": "--read-filter-max-hmer",
+      "synonyms": "NA",
+      "type": "int",
+      "required": "no",
+      "fulltext": "",
+      "defaultValue": "12",
+      "minValue": "-Infinity",
+      "maxValue": "Infinity",
+      "minRecValue": "NA",
+      "maxRecValue": "NA",
+      "kind": "optional",
+      "options": []
+    }
+  ],
+  "description": "A read filter to test if the TP values for each hmer in a flow based read form\n are wihin the allowed range (being the possible lengths of hmers - maxHmer)",
+  "name": "FlowBasedTPAttributeValidReadFilter",
+  "group": "Read Filters",
+  "beta": false,
+  "experimental": false
+}

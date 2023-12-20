@@ -1,0 +1,9 @@
+{
+  "summary": "Hmer Indel Nucleotide Flow Annotation",
+  "arguments": [],
+  "description": "Flow Annotation: nucleotide of the hmer indel, if so",
+  "name": "HmerIndelNuc",
+  "group": "Flow Annotations",
+  "beta": false,
+  "experimental": false
+}

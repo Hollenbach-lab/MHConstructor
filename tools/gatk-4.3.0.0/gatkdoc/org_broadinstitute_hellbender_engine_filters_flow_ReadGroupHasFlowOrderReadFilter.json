@@ -1,0 +1,9 @@
+{
+  "summary": "Filter out reads without a flow associated",
+  "arguments": [],
+  "description": "A read filter to test if the read\u0027s readGroup has a flow order associated with it",
+  "name": "ReadGroupHasFlowOrderReadFilter",
+  "group": "Read Filters",
+  "beta": false,
+  "experimental": false
+}

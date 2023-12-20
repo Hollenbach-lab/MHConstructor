@@ -1,0 +1,9 @@
+{
+  "summary": "Right Motif Flow Annotation",
+  "arguments": [],
+  "description": "Flow Annotation: motifs to the left and right of the indel",
+  "name": "HmerMotifs",
+  "group": "Flow Annotations",
+  "beta": false,
+  "experimental": false
+}

@@ -1,0 +1,25 @@
+{
+  "summary": "Keep only reads that meet all given jexl expressions (on their attributes)",
+  "arguments": [
+    {
+      "summary": "One or more JEXL expressions used to filter",
+      "name": "--read-filter-expression",
+      "synonyms": "NA",
+      "type": "List[String]",
+      "required": "yes",
+      "fulltext": "",
+      "defaultValue": "[]",
+      "minValue": "NA",
+      "maxValue": "NA",
+      "minRecValue": "NA",
+      "maxRecValue": "NA",
+      "kind": "required",
+      "options": []
+    }
+  ],
+  "description": "Keep only reads that the attributes of meet a given set of jexl expressions",
+  "name": "JexlExpressionReadTagValueFilter",
+  "group": "Read Filters",
+  "beta": false,
+  "experimental": false
+}

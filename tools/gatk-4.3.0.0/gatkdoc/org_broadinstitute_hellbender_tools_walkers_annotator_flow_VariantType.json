@@ -1,0 +1,9 @@
+{
+  "summary": "Variant type Flow Annotation",
+  "arguments": [],
+  "description": "Flow Annotation: type of variant: SNP/NON-H-INDEL/H-INDEL",
+  "name": "VariantType",
+  "group": "Flow Annotations",
+  "beta": false,
+  "experimental": false
+}

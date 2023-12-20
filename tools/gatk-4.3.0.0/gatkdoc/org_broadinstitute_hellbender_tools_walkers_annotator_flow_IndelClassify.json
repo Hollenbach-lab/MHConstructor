@@ -1,0 +1,9 @@
+{
+  "summary": "Indel Classify Flow Annotation",
+  "arguments": [],
+  "description": "Flow Annotation: indel class: ins, del, NA",
+  "name": "IndelClassify",
+  "group": "Flow Annotations",
+  "beta": false,
+  "experimental": false
+}

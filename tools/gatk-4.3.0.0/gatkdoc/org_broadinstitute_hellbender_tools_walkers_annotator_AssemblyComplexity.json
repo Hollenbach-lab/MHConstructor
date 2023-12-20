@@ -1,0 +1,25 @@
+{
+  "summary": "Describe the complexity of an assembly region",
+  "arguments": [
+    {
+      "summary": "If enabled will treat the reference as the basis for assembly complexity as opposed to estimated germline haplotypes",
+      "name": "--assembly-complexity-reference-mode",
+      "synonyms": "NA",
+      "type": "boolean",
+      "required": "no",
+      "fulltext": "",
+      "defaultValue": "false",
+      "minValue": "NA",
+      "maxValue": "NA",
+      "minRecValue": "NA",
+      "maxRecValue": "NA",
+      "kind": "optional",
+      "options": []
+    }
+  ],
+  "description": "",
+  "name": "AssemblyComplexity",
+  "group": "Variant Annotations",
+  "beta": false,
+  "experimental": false
+}

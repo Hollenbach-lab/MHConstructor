@@ -1,0 +1,9 @@
+{
+  "summary": "Keep only flow based reads that are well-formed",
+  "arguments": [],
+  "description": "Tests whether a flow based read is \u0026quot;well-formed\u0026quot; -- that is, is free of major internal inconsistencies and issues that could lead\n to errors downstream. If a read passes this filter, the rest of the engine should be able to process it without\n blowing up. Note that checks already present in WellformedReadFilter are not duplicated here.\n\n \u003cp\u003e\u003cb\u003eWell-formed flow based reads definition\u003c/b\u003e\u003c/p\u003e\n \u003cul\u003e\n     \u003cli\u003e\u003cb\u003eFlow order: read group must have flow order\u003c/b\u003e\u003c/li\u003e\n     \u003cli\u003e\u003cb\u003eQuality:\u003c/b\u003e should be symtrical within each hmer.\u003c/li\u003e\n     \u003cli\u003e\u003cb\u003etp attribute:\u003c/b\u003e should be symtrical within each hmer.\u003c/li\u003e\n     \u003cli\u003e\u003cb\u003etp attribute:\u003c/b\u003e tp+hmer_length should be within [0, maxhmer],\u003c/li\u003e\n     \u003cli\u003e\u003cb\u003eHardclipped hmer:\u003c/B\u003e is excempted from above checks.\u003c/li\u003e",
+  "name": "WellformedFlowBasedReadFilter",
+  "group": "Read Filters",
+  "beta": false,
+  "experimental": false
+}

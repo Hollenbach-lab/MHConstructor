@@ -1,0 +1,349 @@
+{
+  "summary": "Trains a model for scoring variant calls based on site-level annotations",
+  "arguments": [
+    {
+      "summary": "HDF5 file containing annotations extracted with ExtractVariantAnnotations.",
+      "name": "--annotations-hdf5",
+      "synonyms": "NA",
+      "type": "File",
+      "required": "yes",
+      "fulltext": "",
+      "defaultValue": "null",
+      "minValue": "NA",
+      "maxValue": "NA",
+      "minRecValue": "NA",
+      "maxRecValue": "NA",
+      "kind": "required",
+      "options": []
+    },
+    {
+      "summary": "read one or more arguments files and add them to the command line",
+      "name": "--arguments_file",
+      "synonyms": "NA",
+      "type": "List[File]",
+      "required": "no",
+      "fulltext": "",
+      "defaultValue": "[]",
+      "minValue": "NA",
+      "maxValue": "NA",
+      "minRecValue": "NA",
+      "maxRecValue": "NA",
+      "kind": "optional",
+      "options": []
+    },
+    {
+      "summary": "Calibration-sensitivity threshold that determines which sites will be used for training the negative model in the positive-unlabeled modeling approach. Increasing this will decrease the corresponding positive-model score threshold; sites with scores below this score threshold will be used for training the negative model. Thus, this parameter should typically be chosen to be close to 1, so that sites that score highly according to the positive model will not be used to train the negative model. The unlabeled-annotations-hdf5 argument must be specified in conjunction with this argument. If separate thresholds for SNP and INDEL models are desired, run the tool separately for each mode with its respective threshold.",
+      "name": "--calibration-sensitivity-threshold",
+      "synonyms": "NA",
+      "type": "Double",
+      "required": "no",
+      "fulltext": "",
+      "defaultValue": "null",
+      "minValue": "NA",
+      "maxValue": "NA",
+      "minRecValue": "NA",
+      "maxRecValue": "NA",
+      "kind": "optional",
+      "options": []
+    },
+    {
+      "summary": "A configuration file to use with the GATK.",
+      "name": "--gatk-config-file",
+      "synonyms": "NA",
+      "type": "String",
+      "required": "no",
+      "fulltext": "",
+      "defaultValue": "null",
+      "minValue": "NA",
+      "maxValue": "NA",
+      "minRecValue": "NA",
+      "maxRecValue": "NA",
+      "kind": "common",
+      "options": []
+    },
+    {
+      "summary": "If the GCS bucket channel errors out, how many times it will attempt to re-initiate the connection",
+      "name": "--gcs-max-retries",
+      "synonyms": "-gcs-retries",
+      "type": "int",
+      "required": "no",
+      "fulltext": "",
+      "defaultValue": "20",
+      "minValue": "-Infinity",
+      "maxValue": "Infinity",
+      "minRecValue": "NA",
+      "maxRecValue": "NA",
+      "kind": "optional",
+      "options": []
+    },
+    {
+      "summary": "Project to bill when accessing \"requester pays\" buckets. If unset, these buckets cannot be accessed.  User must have storage.buckets.get permission on the bucket being accessed.",
+      "name": "--gcs-project-for-requester-pays",
+      "synonyms": "NA",
+      "type": "String",
+      "required": "no",
+      "fulltext": "",
+      "defaultValue": "\"\"",
+      "minValue": "NA",
+      "maxValue": "NA",
+      "minRecValue": "NA",
+      "maxRecValue": "NA",
+      "kind": "optional",
+      "options": []
+    },
+    {
+      "summary": "display the help message",
+      "name": "--help",
+      "synonyms": "-h",
+      "type": "boolean",
+      "required": "no",
+      "fulltext": "",
+      "defaultValue": "false",
+      "minValue": "NA",
+      "maxValue": "NA",
+      "minRecValue": "NA",
+      "maxRecValue": "NA",
+      "kind": "optional",
+      "options": []
+    },
+    {
+      "summary": "JSON file containing hyperparameters. Optional if the PYTHON_IFOREST backend is used (if not specified, a default set of hyperparameters will be used); otherwise required.",
+      "name": "--hyperparameters-json",
+      "synonyms": "NA",
+      "type": "File",
+      "required": "no",
+      "fulltext": "",
+      "defaultValue": "null",
+      "minValue": "NA",
+      "maxValue": "NA",
+      "minRecValue": "NA",
+      "maxRecValue": "NA",
+      "kind": "optional",
+      "options": []
+    },
+    {
+      "summary": "Variant types for which to train models. Duplicate values will be ignored.",
+      "name": "--mode",
+      "synonyms": "NA",
+      "type": "List[VariantType]",
+      "required": "no",
+      "fulltext": "",
+      "defaultValue": "[SNP, INDEL]",
+      "minValue": "NA",
+      "maxValue": "NA",
+      "minRecValue": "NA",
+      "maxRecValue": "NA",
+      "kind": "optional",
+      "options": [
+        {
+          "summary": "",
+          "name": "SNP"
+        },
+        {
+          "summary": "",
+          "name": "INDEL"
+        }
+      ]
+    },
+    {
+      "summary": "Backend to use for training models. JAVA_BGMM will use a pure Java implementation (ported from Python scikit-learn) of the Bayesian Gaussian Mixture Model. PYTHON_IFOREST will use the Python scikit-learn implementation of the IsolationForest method and will require that the corresponding Python dependencies are present in the environment. PYTHON_SCRIPT will use the script specified by the python-script argument. See the tool documentation for more details.",
+      "name": "--model-backend",
+      "synonyms": "NA",
+      "type": "VariantAnnotationsModelBackend",
+      "required": "no",
+      "fulltext": "",
+      "defaultValue": "PYTHON_IFOREST",
+      "minValue": "NA",
+      "maxValue": "NA",
+      "minRecValue": "NA",
+      "maxRecValue": "NA",
+      "kind": "optional",
+      "options": [
+        {
+          "summary": "",
+          "name": "JAVA_BGMM"
+        },
+        {
+          "summary": "Use the script at org/broadinstitute/hellbender/tools/walkers/vqsr/scalable/isolation-forest.py",
+          "name": "PYTHON_IFOREST"
+        },
+        {
+          "summary": "Use a user-provided script.",
+          "name": "PYTHON_SCRIPT"
+        }
+      ]
+    },
+    {
+      "summary": "Output prefix.",
+      "name": "--output",
+      "synonyms": "-O",
+      "type": "String",
+      "required": "yes",
+      "fulltext": "",
+      "defaultValue": "null",
+      "minValue": "NA",
+      "maxValue": "NA",
+      "minRecValue": "NA",
+      "maxRecValue": "NA",
+      "kind": "required",
+      "options": []
+    },
+    {
+      "summary": "Python script used for specifying a custom scoring backend. If provided, model-backend must also be set to PYTHON_SCRIPT.",
+      "name": "--python-script",
+      "synonyms": "NA",
+      "type": "File",
+      "required": "no",
+      "fulltext": "",
+      "defaultValue": "null",
+      "minValue": "NA",
+      "maxValue": "NA",
+      "minRecValue": "NA",
+      "maxRecValue": "NA",
+      "kind": "optional",
+      "options": []
+    },
+    {
+      "summary": "Whether to suppress job-summary info on System.err.",
+      "name": "--QUIET",
+      "synonyms": "NA",
+      "type": "Boolean",
+      "required": "no",
+      "fulltext": "",
+      "defaultValue": "false",
+      "minValue": "NA",
+      "maxValue": "NA",
+      "minRecValue": "NA",
+      "maxRecValue": "NA",
+      "kind": "common",
+      "options": []
+    },
+    {
+      "summary": "display hidden arguments",
+      "name": "--showHidden",
+      "synonyms": "-showHidden",
+      "type": "boolean",
+      "required": "no",
+      "fulltext": "",
+      "defaultValue": "false",
+      "minValue": "NA",
+      "maxValue": "NA",
+      "minRecValue": "NA",
+      "maxRecValue": "NA",
+      "kind": "advanced",
+      "options": []
+    },
+    {
+      "summary": "Temp directory to use.",
+      "name": "--tmp-dir",
+      "synonyms": "NA",
+      "type": "GATKPath",
+      "required": "no",
+      "fulltext": "",
+      "defaultValue": "null",
+      "minValue": "NA",
+      "maxValue": "NA",
+      "minRecValue": "NA",
+      "maxRecValue": "NA",
+      "kind": "common",
+      "options": []
+    },
+    {
+      "summary": "HDF5 file containing annotations extracted with ExtractVariantAnnotations. If specified with calibration-sensitivity-threshold, a positive-unlabeled modeling approach will be used; otherwise, a positive-only modeling approach will be used.",
+      "name": "--unlabeled-annotations-hdf5",
+      "synonyms": "NA",
+      "type": "File",
+      "required": "no",
+      "fulltext": "",
+      "defaultValue": "null",
+      "minValue": "NA",
+      "maxValue": "NA",
+      "minRecValue": "NA",
+      "maxRecValue": "NA",
+      "kind": "optional",
+      "options": []
+    },
+    {
+      "summary": "Whether to use the JdkDeflater (as opposed to IntelDeflater)",
+      "name": "--use-jdk-deflater",
+      "synonyms": "-jdk-deflater",
+      "type": "boolean",
+      "required": "no",
+      "fulltext": "",
+      "defaultValue": "false",
+      "minValue": "NA",
+      "maxValue": "NA",
+      "minRecValue": "NA",
+      "maxRecValue": "NA",
+      "kind": "common",
+      "options": []
+    },
+    {
+      "summary": "Whether to use the JdkInflater (as opposed to IntelInflater)",
+      "name": "--use-jdk-inflater",
+      "synonyms": "-jdk-inflater",
+      "type": "boolean",
+      "required": "no",
+      "fulltext": "",
+      "defaultValue": "false",
+      "minValue": "NA",
+      "maxValue": "NA",
+      "minRecValue": "NA",
+      "maxRecValue": "NA",
+      "kind": "common",
+      "options": []
+    },
+    {
+      "summary": "Control verbosity of logging.",
+      "name": "--verbosity",
+      "synonyms": "-verbosity",
+      "type": "LogLevel",
+      "required": "no",
+      "fulltext": "",
+      "defaultValue": "INFO",
+      "minValue": "NA",
+      "maxValue": "NA",
+      "minRecValue": "NA",
+      "maxRecValue": "NA",
+      "kind": "common",
+      "options": [
+        {
+          "summary": "",
+          "name": "ERROR"
+        },
+        {
+          "summary": "",
+          "name": "WARNING"
+        },
+        {
+          "summary": "",
+          "name": "INFO"
+        },
+        {
+          "summary": "",
+          "name": "DEBUG"
+        }
+      ]
+    },
+    {
+      "summary": "display the version number for this tool",
+      "name": "--version",
+      "synonyms": "NA",
+      "type": "boolean",
+      "required": "no",
+      "fulltext": "",
+      "defaultValue": "false",
+      "minValue": "NA",
+      "maxValue": "NA",
+      "minRecValue": "NA",
+      "maxRecValue": "NA",
+      "kind": "optional",
+      "options": []
+    }
+  ],
+  "description": "Trains a model for scoring variant calls based on site-level annotations.\n\n \u003cp\u003e\n     This tool is intended to be used as the second step in a variant-filtering workflow that supersedes the\n     VariantRecalibrator workflow. Given training (and optionally, calibration) sets of site-level annotations\n     produced by ExtractVariantAnnotations, this tool can be used to train a model for scoring variant\n     calls. For each variant type (i.e., SNP or INDEL) specified using the MODE_LONG_NAME argument, the tool\n     outputs files that are either: 1) serialized scorers, each of which persists to disk a function for computing\n     scores given subsequent annotations, or 2) HDF5 files containing a set of scores, each corresponding to training,\n     calibration, and unlabeled sets, as appropriate.\n \u003c/p\u003e\n\n \u003cp\u003e\n     The model files produced by this tool can in turn be provided along with a VCF file to the ScoreVariantAnnotations\n     tool, which assigns a score to each call (with a lower score indicating that a call is more likely to be an artifact\n     and should perhaps be filtered). Each score can also be converted to a corresponding sensitivity with respect to a\n     calibration set, if the latter is available.\n \u003c/p\u003e\n\n \u003ch3\u003eModeling approaches\u003c/h3\u003e\n\n \u003cp\u003e\n     This tool can perform modeling using either a positive-only approach or a positive-negative approach.\n     In a positive-only approach, the annotation-space distribution of training sites is used to learn a\n     function for converting annotations for subsequent sites into a score; typically, higher scores correspond to\n     regions of annotation space that are more densely populated by training sites. In contrast, a positive-negative\n     approach attempts to additionally use unlabeled sites to better identify regions of annotation space that correspond\n     to low scores against the original, positive-only model (with the assumption being that unlabeled sites are\n     more likely to populate such regions than are training sites). A second, negative model can then be trained,\n     and the resulting scores (which are presumably higher in regions of annotation space that are less densely\n     populated by the original training sites) can be subtracted from the original scores to produce a final score.\n     (Note that this positive-negative approach could be considered as a single iteration of a more general\n     approach typically referred to as positive-unlabeled learning.)\n \u003c/p\u003e\n\n \u003cp\u003e\n     A positive-only approach is likely to perform well in cases where a sufficient number of reliable training sites\n     is available. In contrast, if 1) only a small number of reliable training sites is available, and/or\n     2) the reliability of the training sites is questionable (e.g., the sites may be contaminated by\n     a non-negigible number of sequencing artifacts), then a positive-negative approach may be beneficial.\n     However, note that the positive-negative approach introduces an additional hyperparameter---the threshold\n     that determines the selection of sites for training the negative model, controlled by the\n     CALIBRATION_SENSITIVITY_THRESHOLD_LONG_NAME argument---which may require tuning.\n     Further note that although VariantRecalibrator (which this tool supplants) has typically been used to\n     implement a positive-negative approach, a positive-only approach likely suffices in many use cases.\n \u003c/p\u003e\n\n \u003cp\u003e\n     If a positive-only approach has been specified, then if training sites of the variant type are available:\n\n     \u003cul\u003e\n         \u003cli\u003e 1) A positive model is trained using these training sites and is serialized to file,\u003c/li\u003e\n         \u003cli\u003e 2) Scores for these training sites are generated using the positive model and output to a file,\u003c/li\u003e\n         \u003cli\u003e 3) If calibration sites of the variant type are available, scores for these calibration sites are\n                 generated using the positive model and output to a file.\u003c/li\u003e\n     \u003c/ul\u003e\n\n     Additionally, if a positive-negative approach has been specified (i.e., the UNLABELED_ANNOTATIONS_HDF5_LONG_NAME\n     and CALIBRATION_SENSITIVITY_THRESHOLD_LONG_NAME arguments have been provided),\n     and if both unlabeled and calibration sites of the variant type are available, then:\n\n     \u003cul\u003e\n         \u003cli\u003e 4) The calibration scores generated from the positive model are used to convert the\n                 calibration-sensitivity threshold into a score threshold,\u003c/li\u003e\n         \u003cli\u003e 5) Training sites with scores below the score threshold are selected for training a negative model,\u003c/li\u003e\n         \u003cli\u003e 6) Scores for unlabeled sites are generated using the positive model and output to a file,\u003c/li\u003e\n         \u003cli\u003e 7) Unlabeled sites with scores below the score threshold are selected for training a negative model,\u003c/li\u003e\n         \u003cli\u003e 8) A negative model is trained using these selected training and unlabeled sites and is serialized to file,\u003c/li\u003e\n         \u003cli\u003e 9) Scores for calibration sites are generated using the positive-negative model and overwritten in the existing file.\u003c/li\u003e\n     \u003c/ul\u003e\n\n     Note that the positive-negative approach thus yields 1) scores for training and unlabeled sites generated from\n     the positive model and 2) scores for calibration sites generated from the positive-negative model. This is opposed\n     to generating scores from all sites from the positive-negative model, since these can simply be obtained from\n     a downstream run of ScoreVariantAnnotations.\n \u003c/p\u003e\n\n \u003ch3\u003eModeling backends\u003c/h3\u003e\n\n \u003cp\u003e\n     This tool allows the use of different backends for modeling and scoring. See also below\n     for instructions for using a custom, user-provided implementation.\n \u003c/p\u003e\n\n \u003ch4\u003ePython isolation-forest backend\u003c/h4\u003e\n\n \u003cp\u003e\n\n     This backend uses scikit-learn modules to train models and scoring functions using the\n     \u003ca href\u003d\"https://en.wikipedia.org/wiki/Isolation_forest\"\u003eisolation-forest method for anomaly detection\u003c/a\u003e.\n     Median imputation of missing annotation values is performed before applying the method.\n \u003c/p\u003e\n\n \u003cp\u003e\n     This backend can be selected by specifying PYTHON_IFOREST to the MODEL_BACKEND_LONG_NAME argument\n     and is also currently the the default backend. It is implemented by the script at\n     src/main/resources/org/broadinstitute/hellbender/tools/walkers/vqsr/scalable/isolation-forest.py, which\n     requires that the argparse, h5py, numpy, sklearn, and dill packages be present in the Python environment; users\n     may wish to simply use the provided GATK conda environment to ensure that the correct versions of all packages are available.\n     See the IsolationForest documentation \u003ca href\u003d\"https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html\"\u003ehere\u003c/a\u003e\n     as appropriate for the version of scikit-learn used in your Python environment. The hyperparameters documented\n     there can be specified using the HYPERPARAMETERS_JSON_LONG_NAME argument; see\n     src/main/resources/org/broadinstitute/hellbender/tools/walkers/vqsr/scalable/isolation-forest-hyperparameters.json\n     for an example and the default values.\n \u003c/p\u003e\n\n \u003cp\u003e\n     Note that HDF5 files may be viewed using \u003ca href\u003d\"https://support.hdfgroup.org/products/java/hdfview/\"\u003ehdfview\u003c/a\u003e\n     or loaded in Python using \u003ca href\u003d\"http://www.pytables.org/\"\u003ePyTables\u003c/a\u003e or \u003ca href\u003d\"http://www.h5py.org/\"\u003eh5py\u003c/a\u003e.\n \u003c/p\u003e\n\n \u003ch3\u003eCalibration sets\u003c/h3\u003e\n\n \u003cp\u003e\n     The choice of calibration set will determine the conversion between model scores and calibration-set sensitivities.\n     Ideally, the calibration set should be comprised of a unbiased sample from the full distribution of true sites\n     in annotation space; the score-sensitivity conversion can roughly be thought of as a mapping from sensitivities in\n     [0, 1] to a contour of this annotation-space distribution. In practice, any biases in the calibration set (e.g.,\n     if it consists of high quality, previously filtered calls, which may be biased towards the high density regions\n     of the full distribution) will be reflected in the conversion and should be taken into consideration when\n     interpreting calibration-set sensitivities.\n \u003c/p\u003e\n\n \u003ch3\u003eInputs\u003c/h3\u003e\n\n \u003cul\u003e\n     \u003cli\u003e\n         Labeled-annotations HDF5 file (.annot.hdf5). Annotation data and metadata for labeled sites are stored in the\n         HDF5 directory structure given in the documentation for the ExtractVariantAnnotations tool. In typical\n         usage, both the LabeledVariantAnnotationsData#TRAINING_LABEL and\n         LabeledVariantAnnotationsData#CALIBRATION_LABEL labels would be available for non-empty sets of\n         sites of the requested variant type.\n     \u003c/li\u003e\n     \u003cli\u003e\n         (Optional) Unlabeled-annotations HDF5 file (.unlabeled.annot.hdf5). Annotation data and metadata for\n         unlabeled sites are stored in the HDF5 directory structure given in the documentation for the\n         ExtractVariantAnnotations tool. If provided, a positive-negative modeling approach (similar to\n         that used in VariantRecalibrator will be used.\n     \u003c/li\u003e\n     \u003cli\u003e\n         Variant types (i.e., SNP and/or INDEL) for which to train models. Logic for determining variant type was retained from\n         VariantRecalibrator; see VariantType. A separate model will be trained for each variant type\n         and separate sets of outputs with corresponding tags in the filenames (i.e., \"snp\" or \"indel\") will be produced.\n         Alternatively, the tool can be run twice, once for each variant type; this may be useful if one wishes to use\n         different argument values or modeling approaches.\n     \u003c/li\u003e\n     \u003cli\u003e\n         (Optional) Model backend. The Python isolation-forest backend is currently the default backend.\n         A custom backend can also be specified in conjunction with the PYTHON_SCRIPT_LONG_NAME argument.\n     \u003c/li\u003e\n     \u003cli\u003e\n         (Optional) Model hyperparameters JSON file. This file can be used to specify backend-specific\n         hyperparameters in JSON format, which is to be consumed by the modeling script. This is required if a\n         custom backend is used.\n     \u003c/li\u003e\n     \u003cli\u003e\n         (Optional) Calibration-set sensitivity threshold. The same threshold will be used for both SNP and INDEL\n         variant types. If different thresholds are desired, the tool can be twice, once for each variant type.\n     \u003c/li\u003e\n     \u003cli\u003e\n         Output prefix.\n         This is used as the basename for output files.\n     \u003c/li\u003e\n \u003c/ul\u003e\n\n \u003ch3\u003eOutputs\u003c/h3\u003e\n\n \u003cp\u003e\n     The following outputs are produced for each variant type specified by the MODE_LONG_NAME argument\n     and are delineated by type-specific tags in the filename of each output, which take the form of\n     {output-prefix}.{variant-type}.{file-suffix}. For example, scores for the SNP calibration set\n     will be output to the {output-prefix}.snp.calibrationScores.hdf5 file.\n \u003c/p\u003e\n\n \u003cul\u003e\n     \u003cli\u003e\n         Training-set positive-model scores HDF5 file (.trainingScores.hdf5).\n     \u003c/li\u003e\n     \u003cli\u003e\n         Positive-model serialized scorer file. (.scorer.pkl for the default PYTHON_IFOREST model backend).\n     \u003c/li\u003e\n     \u003cli\u003e\n         (Optional) Unlabeled-set positive-model scores HDF5 file (.unlabeledScores.hdf5). This is only output\n         if a positive-negative modeling approach is used.\n     \u003c/li\u003e\n     \u003cli\u003e\n         (Optional) Calibration-set scores HDF5 file (.calibrationScores.hdf5). This is only output if a calibration\n         set is provided. If a positive-only modeling approach is used, scores will be generated from the positive model;\n         if a positive-negative modeling approach is used, scores will be generated from the positive-negative model.\n     \u003c/li\u003e\n     \u003cli\u003e\n         (Optional) Negative-model serialized scorer file. (.negative.scorer.pkl for the default PYTHON_IFOREST model backend).\n         This is only output if a positive-negative modeling approach is used.\n     \u003c/li\u003e\n \u003c/ul\u003e\n\n \u003ch3\u003eUsage examples\u003c/h3\u003e\n\n \u003cp\u003e\n     Train SNP and INDEL models using the default Python IsolationForest model backend with a positive-only approach,\n     given an input labeled-annotations HDF5 file generated by ExtractVariantAnnotations that contains\n     labels for both training and calibration sets, producing the outputs 1) train.snp.scorer.pkl,\n     2) train.snp.trainingScores.hdf5, and 3) train.snp.calibrationScores.hdf5, as well as analogous files\n     for the INDEL model. Note that the MODE_LONG_NAME arguments are made explicit here, although both\n     SNP and INDEL modes are selected by default.\n\n \u003cpre\u003e\n     gatk TrainVariantAnnotationsModel \\\n          --annotations-hdf5 extract.annot.hdf5 \\\n          --mode SNP \\\n          --mode INDEL \\\n          -O train\n \u003c/pre\u003e\n \u003c/p\u003e\n\n \u003cp\u003e\n     Train SNP and INDEL models using the default Python IsolationForest model backend with a positive-negative approach\n     (using a calibration-sensitivity threshold of 0.95 to select sites for training the negative model),\n     given an input labeled-annotations HDF5 file that contains labels for both training and calibration sets\n     and an input unlabeled-annotations HDF5 file (with both HDF5 files generated by ExtractVariantAnnotations),\n     producing the outputs 1) train.snp.scorer.pkl, 2) train.snp.negative.scorer.pkl, 3) train.snp.trainingScores.hdf5,\n     4) train.snp.calibrationScores.hdf5, and 5) train.snp.unlabeledScores.hdf5, as well as analogous files\n     for the INDEL model. Note that the MODE_LONG_NAME arguments are made explicit here, although both\n     SNP and INDEL modes are selected by default.\n\n \u003cpre\u003e\n     gatk TrainVariantAnnotationsModel \\\n          --annotations-hdf5 extract.annot.hdf5 \\\n          --unlabeled-annotations-hdf5 extract.unlabeled.annot.hdf5 \\\n          --mode SNP \\\n          --mode INDEL \\\n          --calibration-sensitivity-threshold 0.95 \\\n          -O train\n \u003c/pre\u003e\n \u003c/p\u003e\n\n \u003ch3\u003eCustom modeling/scoring backends (ADVANCED)\u003c/h3\u003e\n\n \u003cp\u003e\n     The primary modeling functionality performed by this tool is accomplished by a \"modeling backend\"\n     whose fundamental contract is to take an input HDF5 file containing an annotation matrix for sites of a\n     single variant type (i.e., SNP or INDEL) and to output a serialized scorer for that variant type.\n     Rather than using one of the available, implemented backends, advanced users may provide their own backend\n     via the PYTHON_SCRIPT_LONG_NAME argument. See documentation in the modeling and scoring interfaces\n     (VariantAnnotationsModel and VariantAnnotationsScorer, respectively), as well as the default\n     Python IsolationForest implementation at PythonSklearnVariantAnnotationsModel and\n     src/main/resources/org/broadinstitute/hellbender/tools/walkers/vqsr/scalable/isolation-forest.py.\n \u003c/p\u003e\n\n \u003cp\u003e\n     Extremely advanced users could potentially substitute their own implementation for the entire\n     TrainVariantAnnotationsModel tool, while still making use of the up/downstream\n     ExtractVariantAnnotations and ScoreVariantAnnotations tools. To do so, one would additionally\n     have to implement functionality for subsetting training/calibration sets by variant type,\n     calling modeling backends as appropriate, and scoring calibration sets.\n \u003c/p\u003e",
+  "name": "TrainVariantAnnotationsModel",
+  "group": "Variant Filtering",
+  "beta": true,
+  "experimental": false
+}

@@ -1,0 +1,9 @@
+{
+  "summary": "Cycle Skip Status Flow Annotation",
+  "arguments": [],
+  "description": "Flow Annotation: cycle skip status: cycle-skip, possible-cycle-skip, non-skip",
+  "name": "CycleSkipStatus",
+  "group": "Flow Annotations",
+  "beta": false,
+  "experimental": false
+}

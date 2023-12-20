@@ -1,0 +1,9 @@
+{
+  "summary": "Filter out flow reads that have invalid TP values (non palandromic)",
+  "arguments": [],
+  "description": "A read filter to test if the TP values for each hmer in a flow based read form\n a polindrome (as they should)",
+  "name": "FlowBasedTPAttributeSymetricReadFilter",
+  "group": "Read Filters",
+  "beta": false,
+  "experimental": false
+}

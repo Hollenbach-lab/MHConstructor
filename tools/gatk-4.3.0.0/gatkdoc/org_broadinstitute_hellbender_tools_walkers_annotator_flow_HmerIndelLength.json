@@ -1,0 +1,9 @@
+{
+  "summary": "Hmer Indel Length Flow Annotation",
+  "arguments": [],
+  "description": "Flow Annotation: length of the hmer indel, if so",
+  "name": "HmerIndelLength",
+  "group": "Flow Annotations",
+  "beta": false,
+  "experimental": false
+}

@@ -1,0 +1,9 @@
+{
+  "summary": "GC Content Flow Annotation",
+  "arguments": [],
+  "description": "Flow Annotation: percentage of G or C in the window around hmer",
+  "name": "GcContent",
+  "group": "Flow Annotations",
+  "beta": false,
+  "experimental": false
+}

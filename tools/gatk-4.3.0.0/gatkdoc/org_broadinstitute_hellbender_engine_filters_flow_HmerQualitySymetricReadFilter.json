@@ -1,0 +1,9 @@
+{
+  "summary": "Filter out reads that don\u0027t have palandromic hmer flow order qualities",
+  "arguments": [],
+  "description": "A read filter to test if the quality values for each hmer in a flow based read form\n a polindrome (as they should)",
+  "name": "HmerQualitySymetricReadFilter",
+  "group": "Read Filters",
+  "beta": false,
+  "experimental": false
+}

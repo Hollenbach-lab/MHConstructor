@@ -1,0 +1,80 @@
+{
+  "summary": "Keep only reads that contains a tag with value that agrees with parameters",
+  "arguments": [
+    {
+      "summary": "Look for this tag in read",
+      "name": "--read-filter-tag",
+      "synonyms": "NA",
+      "type": "String",
+      "required": "yes",
+      "fulltext": "",
+      "defaultValue": "null",
+      "minValue": "NA",
+      "maxValue": "NA",
+      "minRecValue": "NA",
+      "maxRecValue": "NA",
+      "kind": "required",
+      "options": []
+    },
+    {
+      "summary": "Compare value in tag to this value",
+      "name": "--read-filter-tag-comp",
+      "synonyms": "NA",
+      "type": "Float",
+      "required": "no",
+      "fulltext": "",
+      "defaultValue": "0.0",
+      "minValue": "-Infinity",
+      "maxValue": "Infinity",
+      "minRecValue": "NA",
+      "maxRecValue": "NA",
+      "kind": "optional",
+      "options": []
+    },
+    {
+      "summary": "Compare value in tag to value with this operator. If T is the value in the tag, OP is the operation provided, and V is the value in read-filter-tag, then the read will pass the filter iff T OP V is true.",
+      "name": "--read-filter-tag-op",
+      "synonyms": "NA",
+      "type": "Operator",
+      "required": "no",
+      "fulltext": "",
+      "defaultValue": "EQUAL",
+      "minValue": "NA",
+      "maxValue": "NA",
+      "minRecValue": "NA",
+      "maxRecValue": "NA",
+      "kind": "optional",
+      "options": [
+        {
+          "summary": "",
+          "name": "LESS"
+        },
+        {
+          "summary": "",
+          "name": "LESS_OR_EQUAL"
+        },
+        {
+          "summary": "",
+          "name": "GREATER"
+        },
+        {
+          "summary": "",
+          "name": "GREATER_OR_EQUAL"
+        },
+        {
+          "summary": "",
+          "name": "EQUAL"
+        },
+        {
+          "summary": "",
+          "name": "NOT_EQUAL"
+        }
+      ]
+    }
+  ],
+  "description": "Keep only reads that contain a tag with a value that agrees with parameters as specified.",
+  "name": "ReadTagValueFilter",
+  "group": "Read Filters",
+  "beta": false,
+  "experimental": false
+}
