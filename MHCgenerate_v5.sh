@@ -105,7 +105,7 @@ for i in $ids; do
 ############## 1. Read quality filter ###########
          cd ./MHC_readQC
          readLog=$sampleAssembly/log_${i}_readQC.txt
-         sh readQC.sh ${R1} ${R1A} ${R2} ${R2A} ${sampleAssembly} ${nThreads} ${primerFile} ${readCount} ${i} ${fastqDir} >> $readLog
+         sh readQC.sh ${R1} ${R1A} ${R2} ${R2A} ${sampleAssembly} ${nThreads} ${readCount} ${i} ${fastqDir} >> $readLog
          cd ..
 
 ############## 2. Generate ref guided, de novo MHC assembly ##########
@@ -116,14 +116,14 @@ for i in $ids; do
 	## Generate assembly for Hap1
 	cd ./MHC_assembly/
 	assemblyLog1=${sampleAssembly}/log_${i}_${Hap1}_assembly.txt
-	sh mhc_assembly.sh ${i} ${R1A} ${R2A} ${fastqDir} ${Hap1} ${sampleAssembly} ${binDir} ${progSamtools} ${progPicard} ${readCount} ${insertSize} ${kmerAssembly} ${expCov} ${Hap2} ${progBowtie2}>> $assemblyLog1 
+	sh mhc_assembly.sh ${i} ${R1A}_pg_${readCount}.fastq.gz ${R2A}_pg_${readCount}.fastq.gz ${readCount} ${fastqDir} ${Hap1} ${sampleAssembly} ${binDir} ${progSamtools} ${progPicard} ${insertSize} ${kmerAssembly} ${expCov} ${Hap2} ${repoDir} ${progBowtie2}>> $assemblyLog1 
 	
 	## Check if individual is MHC homozygous or heterozygous
 	## If heterozygous, repeat assembly using Hap2 as guide 
 	if [ ${Hap1} != ${Hap2} ]
 	then
 		assemblyLog2=log_${i}_${Hap2}_assembly.txt
-		sh mhc_assembly.sh ${i} ${R1A} ${R2A} ${fastqDir} ${Hap2} ${sampleAssembly} ${binDir} ${progSamtools} ${progPicard} ${readCount} ${insertSize} ${kmerAssembly} ${expCov} ${Hap1} ${progBowtie2} >> $assemblyLog2
+		sh mhc_assembly.sh ${i} ${R1A}_pg_${readCount}.fastq.gz ${R2A}_pg_${readCount}.fastq.gz ${readCount} ${fastqDir} ${Hap2} ${sampleAssembly} ${binDir} ${progSamtools} ${progPicard} ${insertSize} ${kmerAssembly} ${expCov} ${Hap1} ${repoDir} ${progBowtie2} >> $assemblyLog2
 	
 	fi
 	cd ..

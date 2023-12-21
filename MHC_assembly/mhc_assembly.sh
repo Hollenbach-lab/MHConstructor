@@ -16,33 +16,32 @@
 progPath=${9}
 
 workPathFiles=${6}
-readQCDir=${8}
+readQCDir=${7}
 # set work path ---------------------------
-workPath=${8}/${1}_${5}_${7}
+workPath=${7}/${1}_${4}_${6}
 
 # log file
 log=${workPath}/log_${1}_MHCassembly.txt
 
 mkdir ${workPath}
 
-#python /home/kwade/MHCassembly/extractPrimers.py ${workPath} $1 $2
 
 # set variables #########################################
-ref=${progPath}/MHC_generate_v3/refMHChaps/${7}.fasta
-refRed=${progPath}/MHC_generate_v3/refMHChaps/${7}
+ref=${progPath}/MHC_generate_v3/refMHChaps/${6}.fasta
+refRed=${progPath}/MHC_generate_v3/refMHChaps/${6}
 
 primerFile=${workPathFiles}/testPrimers.fasta
 primerFileMP=${workPathFiles}/testPrimers.fasta
 
 NThreads=8      # set the number of threads of every parallelizable step
 maxReadLength=155
-kmer=${13}         #define best K
-declare -i expCov=${14}
+kmer=${12}         #define best K
+declare -i expCov=${13}
 
 # paired-end libraries -------------------
 name=$1           # set name of your species
 lib=(150)      # set insertion libraries
-insSize=(${12})
+insSize=(${11})
 insLow=(0)     # lower bound of insertion size
 libsd=(100)       # sd of insertion size
 
@@ -58,15 +57,15 @@ progIdba=idba
 progFastQC=fastqc ##conda
 progTrimmomatic=trimmomatic ##conda
 #progSamtools=${progPath}/samtools-1.16.1/samtools
-progSamtools=${10}
+progSamtools=${9}
 progVcfutils=vcfutils.pl
 #progBcftools=${progPath}/bcftools-1.16.1/bcftools
 progBcftools=bcftools
 progBamtools=bamtools ##conda
 progBedtools=bedtools ##conda
-progPicard=${11}
+progPicard=${10}
 #progBowtie2=/home/kwade/bin/bowtie2-2.4.2-sra-linux-x86_64/bowtie2
-progBowtie2=${17}
+progBowtie2=${16}
 progSeqtk=seqtk ##conda
 progNucmer=nucmer ## installed through 'mummer'
 progGatk=gatk ##conda

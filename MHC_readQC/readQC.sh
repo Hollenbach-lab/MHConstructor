@@ -1,19 +1,19 @@
 #!/bin/bash
+
 # $1 - full R1.fastq file location
 # $2 - R1 ID name
 # $3 - full R2.fastq file location
 # $4 - R2 ID name
 # $5 - workPathDir
 # $6 - n threads
-# $7 - primer file.fasta
-# $8 - readCount (in millions)
-# $9 - sample ID
-# $10 - fastqDir
+# $7 - readCount (in millions)
+# $8 - sample ID
+# $9 - fastqDir
 progFastQC=fastqc ##conda
 progTrimmomatic=trimmomatic ##conda
-readLog=${5}/log_${9}_readQC.txt
+readLog=${5}/log_${8}_readQC.txt
 million=1000000
-declare -i readNum=$8
+declare -i readNum=$7
 readInt=`expr $readNum \* $million`
 readIntHalf=`expr $readInt / 2`
 
@@ -24,23 +24,23 @@ fastp -i ${1} -o ${2}_pg.fastq.gz -I ${3} -O ${4}_pg.fastq.gz --trim_poly_g --po
 declare -i readNum=$(zless ${2}_pg.fastq.gz | grep '+' | wc -l)
 if [ ${readNum} -ge ${readInt} ]
 then	
-	seqtk sample -s 347 ${2}_pg.fastq.gz ${readIntHalf} > ${2}_pg_${8}.fastq
-	seqtk sample -s 347 ${4}_pg.fastq.gz ${readIntHalf} > ${4}_pg_${8}.fastq
+	seqtk sample -s 347 ${2}_pg.fastq.gz ${readIntHalf} > ${2}_pg_${7}.fastq
+	seqtk sample -s 347 ${4}_pg.fastq.gz ${readIntHalf} > ${4}_pg_${7}.fastq
 fi
 
 if [ ${readNum} -lt ${readInt} ]
 then
-	mv ${2}_pg.fastq.gz ${2}_pg_${8}.fastq
-	mv ${4}_pg.fastq.gz ${4}_pg_${8}.fastq
+	mv ${2}_pg.fastq.gz ${2}_pg_${7}.fastq
+	mv ${4}_pg.fastq.gz ${4}_pg_${7}.fastq
 fi
-gzip ${2}_pg_${8}.fastq
-gzip ${4}_pg_${8}.fastq
+gzip ${2}_pg_${7}.fastq
+gzip ${4}_pg_${7}.fastq
 
 
-names=(${9})
-reads1=(${2}_pg_${8}.fastq.gz)
-reads2=(${4}_pg_${8}.fastq.gz)
-cd ${10}
+names=(${8})
+reads1=(${2}_pg_${7}.fastq.gz)
+reads2=(${4}_pg_${7}.fastq.gz)
+cd ${9}
 
 ## Additional pre-processing from Lischer and Shimizu, 2017
 # 1. Step: quality/adapter trimming and quality check:
@@ -72,7 +72,7 @@ cd ${10}
     read2TrimPair[i]=${5}/${names[i]}_R2_trimPair.fastq
     read2TrimUnPair[i]=${5}/${names[i]}_R2_trimUnPair.fastq
 
-    ${progTrimmomatic} PE -threads ${6} ${reads1[i]} ${reads2[i]} ${read1TrimPair[i]} ${read1TrimUnPair[i]} ${read2TrimPair[i]} ${read2TrimUnPair[i]} ILLUMINACLIP:${7}:2:30:7:5:true LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:40 
+    ${progTrimmomatic} PE -threads ${6} ${reads1[i]} ${reads2[i]} ${read1TrimPair[i]} ${read1TrimUnPair[i]} ${read2TrimPair[i]} ${read2TrimUnPair[i]} LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:40 
 
   done
 
