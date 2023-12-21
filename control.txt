@@ -1,0 +1,12 @@
+binDir=/home/rsuseno
+projectDir=/home/rsuseno/output_MHC/output_MHC_sing_1205
+fastqDir=/home/kwade/INDIGO_Fastq
+R1ext=R1_001.fastq.gz
+R2ext=R2_001.fastq.gz
+nThreads=8
+insertSize=400
+expCov=60
+kmer=51
+primerFile=test.fasta
+readCount=5
+assignHaps=1
