@@ -151,8 +151,6 @@ for i in $ids; do
         then
 		sh orderAssembly.sh ${sampleAssembly}/${i}_${readCount}_${Hap2}/merged_corr/scaffold_gapClosed/${i}_63_final.fasta ${Hap2} ${sampleAssembly}/${i}_${readCount}_${Hap2}/merged_corr/scaffold_gapClosed
          	mv ${sampleAssembly}/${i}_${readCount}_${Hap2}/merged_corr/scaffold_gapClosed/RT_${Hap2}/ragtag.scaffold.fasta ${projectDir}/consensusHap/${i}_vs_${Hap2}.fasta
-	fi
-
+		fi
 	cd ..
-
 done
