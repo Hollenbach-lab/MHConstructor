@@ -1,5 +1,5 @@
 binDir=/home/rsuseno
-projectDir=/home/rsuseno/output_MHC/output_MHC_sing_1205
+projectDir=/home/rsuseno/output_MHC/output_MHC_v5_1222_local
 fastqDir=/home/kwade/INDIGO_Fastq
 R1ext=R1_001.fastq.gz
 R2ext=R2_001.fastq.gz

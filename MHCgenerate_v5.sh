@@ -39,7 +39,7 @@ then
 fi
 if [ $assignHaps == 1 ]
 then
-	mkdir ${binDir}/MHC_generate/MHC_hapAssign/bestHaps
+	mkdir ${repoDir}/MHC_hapAssign/bestHaps
 	cd MHC_hapAssign
 	python assignMHChaps.py ${RefMHChaplotypes} ${HLAgenotypes} ${C4genotypes}
 	cd ..
