@@ -50,8 +50,8 @@ fi
 ids="$(cat $1)"
 for i in $ids; do
 	echo $i
-        sampleAssembly=${assemblyDir}/${i}_athena_v3
-        mkdir $sampleAssembly
+	sampleAssembly=${assemblyDir}/${i}_athena_v3
+	mkdir $sampleAssembly
 
 
 ######### Pre-process: Step 0.A. Check which type of data the user has, extract WGS reads if needed ######
@@ -84,29 +84,30 @@ for i in $ids; do
 	## Option C: in-house target capture data as .fastq.gz ###
 	if [ "${targetCapture}" != 0 ]
 	then
-                R1="$(find ${fastqDir} -name ${i}*${R1ext})"
-                R2="$(find ${fastqDir} -name ${i}*${R2ext})"
+		R1="$(find ${fastqDir} -name ${i}*${R1ext})"
+		R2="$(find ${fastqDir} -name ${i}*${R2ext})"
 		R1A="$(echo $R1 | cut -d '.' -f 1,1)"
 		R2A="$(echo $R2 | cut -d '.' -f 1,1)"
 		fastqDir=${targetCapture}
+	fi
 
 ############ Preprocess Step 0.B: Assign closest 2 reference MHC haplotypes ###########
 	if [ ${assignHaps} -eq 1 ]
 	then
 		cd ./MHC_hapAssign/
-        	alleles="$(cat ${repoDir}/MHC_hapAssign/bestHaps/${i}_bestMHChaps.txt)";
-        	Hap1="$(echo $alleles| cut -d ' ' -f 2,2)"
-        	Hap2="$(echo $alleles| cut -d ' ' -f 8,8)"
+		alleles="$(cat ${repoDir}/MHC_hapAssign/bestHaps/${i}_bestMHChaps.txt)";
+		Hap1="$(echo $alleles| cut -d ' ' -f 2,2)"
+		Hap2="$(echo $alleles| cut -d ' ' -f 8,8)"
 		echo $Hap1
-        	echo $Hap2
-        	cd ..
+		echo $Hap2
+		cd ..
 	fi 
 
 ############## 1. Read quality filter ###########
-         cd ./MHC_readQC
-         readLog=$sampleAssembly/log_${i}_readQC.txt
-         sh readQC.sh ${R1} ${R1A} ${R2} ${R2A} ${sampleAssembly} ${nThreads} ${readCount} ${i} ${fastqDir} >> $readLog
-         cd ..
+	cd ./MHC_readQC
+	readLog=$sampleAssembly/log_${i}_readQC.txt
+	sh readQC.sh ${R1} ${R1A} ${R2} ${R2A} ${sampleAssembly} ${nThreads} ${readCount} ${i} ${fastqDir} >> $readLog
+	cd ..
 
 ############## 2. Generate ref guided, de novo MHC assembly ##########
 	## One assembly for each MHC haplotype. 
@@ -144,13 +145,15 @@ for i in $ids; do
 
 	###### 4. Scaffold and order assembly against refHap(s) #######
 	cd ./MHC_order/
-        sh orderAssembly.sh ${sampleAssembly}/${i}_${readCount}_${Hap1}/merged_corr/scaffold_gapClosed/${i}_63_final.fasta ${Hap1} ${sampleAssembly}/${i}_${readCount}_${Hap1}/merged_corr/scaffold_gapClosed
-        mv ${sampleAssembly}/${i}_${readCount}_${Hap1}/merged_corr/scaffold_gapClosed/RT_${Hap1}/ragtag.scaffold.fasta ${projectDir}/consensusHap/${i}_vs_${Hap1}.fasta
+	sh orderAssembly.sh ${sampleAssembly}/${i}_${readCount}_${Hap1}/merged_corr/scaffold_gapClosed/${i}_63_final.fasta ${Hap1} ${sampleAssembly}/${i}_${readCount}_${Hap1}/merged_corr/scaffold_gapClosed
+	mv ${sampleAssembly}/${i}_${readCount}_${Hap1}/merged_corr/scaffold_gapClosed/RT_${Hap1}/ragtag.scaffold.fasta ${projectDir}/consensusHap/${i}_vs_${Hap1}.fasta
 
-        if [ ${Hap1} != ${Hap2} ]
-        then
+	if [ ${Hap1} != ${Hap2} ]
+	then
 		sh orderAssembly.sh ${sampleAssembly}/${i}_${readCount}_${Hap2}/merged_corr/scaffold_gapClosed/${i}_63_final.fasta ${Hap2} ${sampleAssembly}/${i}_${readCount}_${Hap2}/merged_corr/scaffold_gapClosed
-         	mv ${sampleAssembly}/${i}_${readCount}_${Hap2}/merged_corr/scaffold_gapClosed/RT_${Hap2}/ragtag.scaffold.fasta ${projectDir}/consensusHap/${i}_vs_${Hap2}.fasta
-		fi
+		mv ${sampleAssembly}/${i}_${readCount}_${Hap2}/merged_corr/scaffold_gapClosed/RT_${Hap2}/ragtag.scaffold.fasta ${projectDir}/consensusHap/${i}_vs_${Hap2}.fasta
+	fi
+
 	cd ..
+
 done
