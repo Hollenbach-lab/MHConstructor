@@ -16,7 +16,7 @@ source ./control.txt
 
 
 ##### DO NOT CHANGE BELOW THIS LINE ########################################
-repoDir=${binDir}/MHCconstructor
+repoDir=${binDir}/MHConstructor
 progSamtools=${repoDir}/tools/samtools-1.9/samtools
 progBowtie2=${repoDir}/tools/bowtie2-2.4.2-sra-linux-x86_64/bowtie2
 progPicard=picard
@@ -32,18 +32,18 @@ conda activate amosPy27
 conda env list
 
 
-if [ $assignHaps == 0 ]
-then
-	$Hap1== 'hg38'
-	$Hap2== 'hg38'
-fi
-if [ $assignHaps == 1 ]
-then
-	mkdir ${repoDir}/MHC_hapAssign/bestHaps
-	cd MHC_hapAssign
-	python assignMHChaps.py ${RefMHChaplotypes} ${HLAgenotypes} ${C4genotypes}
-	cd ..
-fi
+# if [ $assignHaps == 0 ]
+# then
+# 	$Hap1== 'hg38'
+# 	$Hap2== 'hg38'
+# fi
+# if [ $assignHaps == 1 ]
+# then
+# 	mkdir ${repoDir}/MHC_hapAssign/bestHaps
+# 	cd MHC_hapAssign
+# 	python assignMHChaps.py ${RefMHChaplotypes} ${HLAgenotypes} ${C4genotypes}
+# 	cd ..
+# fi
 
 #conda activate amosPy27
 #conda env list
@@ -140,7 +140,7 @@ for i in $ids; do
 	fi
 	cd ..
 
-	source activate py35
+	conda activate py35
 	conda env list
 
 	###### 4. Scaffold and order assembly against refHap(s) #######

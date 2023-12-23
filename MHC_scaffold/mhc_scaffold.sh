@@ -94,12 +94,12 @@ progSeqtk=seqtk ##conda
 progNucmer=nucmer ## installed through 'mummer'
 progGatk=${progPath}/tools/gatk-4.3.0.0/gatk
 progFusion=${progPath}/tools/SOAPdenovo2/
-progRemovShortSeq=${progPath}/MHC_assembly23/RemoveShortSeq.jar
-progGetBlocks=${progPath}/MHC_assembly23/GetBlocks.jar
-progFastaToAmos=${progPath}/MHC_assembly23/FastaToAmos.jar
-progWriteSoapConfig=${progPath}/MHC_assembly23/WriteSoapConfig.jar
-progFastaStats=${progPath}/MHC_assembly23/FastaStats.jar
-progSplitSeqLowCov=${progPath}/MHC_assembly23/SplitSeqLowCov.jar
+progRemovShortSeq=${progPath}/MHC_assembly/RemoveShortSeq.jar
+progGetBlocks=${progPath}/MHC_assembly/GetBlocks.jar
+progFastaToAmos=${progPath}/MHC_assembly/FastaToAmos.jar
+progWriteSoapConfig=${progPath}/MHC_assembly/WriteSoapConfig.jar
+progFastaStats=${progPath}/MHC_assembly/FastaStats.jar
+progSplitSeqLowCov=${progPath}/MHC_assembly/SplitSeqLowCov.jar
 
 ### Initialize read file variables #####
   read1TrimPair=()
