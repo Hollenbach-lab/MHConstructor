@@ -132,7 +132,7 @@ for i in $ids; do
 	####### 3. Error-correct and scaffold assembly ##########
 	cd ./MHC_scaffold/
 	sh mhc_scaffold.sh $i ${R1A} ${R2A} ${fastqDir} ${sampleAssembly} ${insertSize} ${repoDir} ${Hap1} ${Hap2} ${progBowtie2} ${progSamtools} ${progPicard} ${readCount} 
-        
+	
 	if [ ${Hap1} != ${Hap2} ]
 	then
 

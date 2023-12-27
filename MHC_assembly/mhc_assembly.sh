@@ -27,8 +27,8 @@ mkdir ${workPath}
 
 
 # set variables #########################################
-ref=${progPath}/MHC_generate_v3/refMHChaps/${6}.fasta
-refRed=${progPath}/MHC_generate_v3/refMHChaps/${6}
+ref=${15}/refMHCh/${6}.fasta
+refRed=${15}/refMHC/${6}
 
 primerFile=${workPathFiles}/testPrimers.fasta
 primerFileMP=${workPathFiles}/testPrimers.fasta
@@ -70,12 +70,12 @@ progSeqtk=seqtk ##conda
 progNucmer=nucmer ## installed through 'mummer'
 progGatk=gatk ##conda
 progSoapdenovo2=soapdenovo2 ##conda
-progRemovShortSeq=${progPath}/MHC_generate_v3/MHC_assembly23/RemoveShortSeq.jar
-progGetBlocks=${progPath}/MHC_generate_v3/MHC_assembly23/GetBlocks.jar
-progFastaToAmos=${progPath}/MHC_generate_v3/MHC_assembly23/FastaToAmos.jar
-progWriteSoapConfig=${progPath}/MHC_generate_v3/MHC_assembly23/WriteSoapConfig.jar
-progFastaStats=${progPath}/MHC_generate_v3/MHC_assembly23/FastaStats.jar
-progSplitSeqLowCov=${progPath}/MHC_generate_v3/MHC_assembly23/SplitSeqLowCov.jar
+progRemovShortSeq=${15}/MHC_assembly/RemoveShortSeq.jar
+progGetBlocks=${15}/MHC_assembly/GetBlocks.jar
+progFastaToAmos=${15}/MHC_assembly/FastaToAmos.jar
+progWriteSoapConfig=${15}/MHC_assembly/WriteSoapConfig.jar
+progFastaStats=${15}/MHC_assembly/FastaStats.jar
+progSplitSeqLowCov=${15}/MHC_assembly/SplitSeqLowCov.jar
 
 
 # run reference-guided de novo MHC assembly ##########################################
