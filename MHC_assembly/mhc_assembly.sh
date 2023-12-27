@@ -13,9 +13,10 @@
 ##To initialize conda env:
 #conda activate amosPy27
 
-progPath=${9}
+#progPath=${8}
+progPath=${15}
 
-workPathFiles=${6}
+workPathFiles=${5}
 readQCDir=${7}
 # set work path ---------------------------
 workPath=${7}/${1}_${4}_${6}
