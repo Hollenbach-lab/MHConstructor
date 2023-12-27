@@ -367,8 +367,8 @@ progSplitSeqLowCov=${15}/MHC_assembly/SplitSeqLowCov.jar
   
   ### Map to hg38 genome and alt MHC hap (if heterozygous) and remove off-target mapping, unaligned contigs ####
   mkdir ${unassFolder}/offTarget
-  cd ${16}/MHC_generate_v3/MHC_assembly23
-  sh checkAndRemoveOfftarget.sh ${shortNames} hg38Patch11 ${unass500} ${unassFolder} ${15} ${7}
+  cd ${15}/MHC_assembly
+  sh checkAndRemoveOfftarget.sh ${shortNames} hg38Patch11 ${unass500} ${unassFolder} ${14} ${6}
   unass500OT=${unassFolder}/Unassembled_velvet_OT.fa
   cd ${workPath}
   ###################

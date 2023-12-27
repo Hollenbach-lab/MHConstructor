@@ -1,10 +1,10 @@
-binDir=/home/rsuseno
-projectDir=/home/rsuseno/output_MHC/output_MHC_v5_1222_local
+binDir=/home/kwade/bin
+projectDir=/home/kwade/MHConstructor
 fastqDir=/home/kwade/INDIGO_Fastq
 R1ext=R1_001.fastq.gz
 R2ext=R2_001.fastq.gz
 nThreads=8
-insertSize=400
+insertSize=600
 expCov=60
 kmer=51
 primerFile=test.fasta

@@ -20,7 +20,7 @@ repoDir=${binDir}/MHConstructor
 progSamtools=${repoDir}/tools/samtools-1.9/samtools
 progBowtie2=${repoDir}/tools/bowtie2-2.4.2-sra-linux-x86_64/bowtie2
 progPicard=picard
-assemblyDir=${projectDir}/MHC_assembly
+assemblyDir=${projectDir}/MHConstructor_assemblies
 consDir=${projectDir}/consensusHap
 samDir=${projectDir}/sam
 RefMHChaplotypes=${repoDir}/MHC_hapAssign/mhcRefHaps.txt
@@ -50,7 +50,7 @@ conda env list
 ids="$(cat $1)"
 for i in $ids; do
 	echo $i
-	sampleAssembly=${assemblyDir}/${i}_athena_v3
+	sampleAssembly=${assemblyDir}/${i}_MHConstructor
 	mkdir $sampleAssembly
 
 
@@ -90,7 +90,6 @@ for i in $ids; do
 		R2A="$(echo $R2 | cut -d '.' -f 1,1)"
 		fastqDir=${targetCapture}
 	fi
-
 ############ Preprocess Step 0.B: Assign closest 2 reference MHC haplotypes ###########
 	if [ ${assignHaps} -eq 1 ]
 	then
