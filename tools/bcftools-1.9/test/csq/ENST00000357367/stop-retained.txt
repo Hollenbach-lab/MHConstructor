@@ -1,3 +1,0 @@
-358	C	T	stop_retained|PRAMEF8|ENST00000357367|protein_coding|-|475*|358C>T
-358	C	T	stop_retained|PRAMEF8|ENST00000357367|protein_coding|-|475*|358C>T
-

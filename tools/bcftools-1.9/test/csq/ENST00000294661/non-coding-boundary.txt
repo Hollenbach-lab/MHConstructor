@@ -1,3 +1,0 @@
-9715	GCCGGAAA	G	non_coding|C1orf52||processed_transcript
-9715	GCCGGAAA	G	non_coding|C1orf52||processed_transcript
-

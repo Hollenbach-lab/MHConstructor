@@ -84,12 +84,11 @@ for i in $ids; do
 	## Option C: in-house target capture data as .fastq.gz ###
 	if [ "${targetCapture}" != 0 ]
 	then
-		
+		fastqDir=${targetCapture}
 		R1="$(find ${fastqDir} -name ${i}*${R1ext})"
 		R2="$(find ${fastqDir} -name ${i}*${R2ext})"
 		R1A="$(echo $R1 | cut -d '.' -f 1,1)"
 		R2A="$(echo $R2 | cut -d '.' -f 1,1)"
-		fastqDir=${targetCapture}
 	fi
 ############ Preprocess Step 0.B: Assign closest 2 reference MHC haplotypes ###########
 	if [ ${assignHaps} -eq 1 ]
@@ -106,7 +105,7 @@ for i in $ids; do
 ############## 1. Read quality filter ###########
 	cd ./MHC_readQC
 	readLog=$sampleAssembly/log_${i}_readQC.txt
-	#sh readQC.sh ${R1} ${R1A} ${R2} ${R2A} ${sampleAssembly} ${nThreads} ${readCount} ${i} ${fastqDir} >> $readLog
+	sh readQC.sh ${R1} ${R1A} ${R2} ${R2A} ${sampleAssembly} ${nThreads} ${readCount} ${i} ${fastqDir} >> $readLog
 	cd ..
 
 ############## 2. Generate ref guided, de novo MHC assembly ##########

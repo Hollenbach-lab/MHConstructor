@@ -1,3 +1,0 @@
-44688	C	T	missense|SEMA4D|ENST00000420670|protein_coding|-|1M>1I|44688C>T
-44688	C	T	missense|SEMA4D|ENST00000420670|protein_coding|-|1M>1I|44688C>T
-

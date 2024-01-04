@@ -1,3 +1,0 @@
-42130	ACA	A	intron|SOX30||protein_coding
-42130	ACA	A	intron|SOX30||protein_coding
-

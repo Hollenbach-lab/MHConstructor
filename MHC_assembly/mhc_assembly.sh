@@ -61,7 +61,7 @@ progTrimmomatic=trimmomatic ##conda
 progSamtools=${9}
 progVcfutils=vcfutils.pl
 #progBcftools=${progPath}/bcftools-1.16.1/bcftools
-progBcftools=bcftools
+progBcftools=${15}/tools/bcftools-1.16/bcftools
 progBamtools=bamtools ##conda
 progBedtools=bedtools ##conda
 progPicard=${10}
@@ -425,16 +425,17 @@ progSplitSeqLowCov=${15}/MHC_assembly/SplitSeqLowCov.jar
   echo "  run layout..." >> $log
   casm-layout -t 1000 -U ${supercontigs}.layout -C ${supercontigs}.conflict -b ${supercontigs}.bnk ${supercontigs}.delta
 
-
+  bank-unlock Amos_supercontigs.bnk
   ## Running consensus
   echo "  run consensus..." >> $log
   make-consensus -o 10 -B -b ${supercontigs}.bnk
  
-
+  bank-unlock Amos_supercontigs.bnk
   ## Outputting contigs
   echo "  output contigs..." >> $log
   bank2contig ${supercontigs}.bnk > ${supercontigs}.contig
 
+  bank-unlock Amos_supercontigs.bnk
   ## Outputting fasta
   echo "  output fasta..." >> $log
   bank2fasta -b ${supercontigs}.bnk > ${supercontigs}.fasta

@@ -1,3 +1,0 @@
-899	A	G	synonymous|SLC15A3|ENST00000536784|protein_coding|-|1G|899A>G
-899	A	G	synonymous|SLC15A3|ENST00000536784|protein_coding|-|1G|899A>G
-
