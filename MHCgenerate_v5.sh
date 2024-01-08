@@ -139,7 +139,7 @@ for i in $ids; do
 	fi
 	cd ..
 
-	conda activate py35
+	source activate py35
 	conda env list
 
 	###### 4. Scaffold and order assembly against refHap(s) #######
