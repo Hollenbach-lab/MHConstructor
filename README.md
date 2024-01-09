@@ -2,26 +2,38 @@
 
 ## Project Description
 
-Description here
+MHConstructor is an high-throughput, haplotype-informed, MHC-specific, short read de novo assembly method intended to further understand the role of MHC in human traits and disease studies. The full article of [MHConstructor can be found here.](https://stock.adobe.com/search?k=cat)
 
 ## Installation Guide
 To obtain the project directory, the repository can be cloned using the following command:
 
-`git clone https://github.com/wadekj/MHConstructor.git`
+```
+git clone https://github.com/wadekj/MHConstructor.git
+cd ./MHConstructor
+```
 
-To ensure a reliable run, we have containerized our image in [Singularity](https://docs.sylabs.io/guides/3.11/admin-guide/installation.html). We have tested it on Singularity version 3.11.4. The Singularity recipe file, `MHConstructor/container/mhconstructor.def`, can be built using the following command:
+To ensure a reliable run, we have containerized our image in [Singularity](https://docs.sylabs.io/guides/3.11/admin-guide/installation.html). We have tested it on Singularity version 3.11.4. The Singularity recipe file, `MHConstructor/container/mhconstructor.def`, can be built using one of the following commands:
+```
+cd ./container
+singularity build --fakeroot mhconstructor.sif mhconstructor.def
+cd ../
+```
 
-`sudo singularity build mhconstructor.sif mhconstructor.def`
 
-This will create a .sif file that will need to be included when you're running the pipeline through Singularity.
+This command can take approximately an hour to create a .sif file that will need to be included when running the pipeline through Singularity.
 
 
 ## Usage Guide
-### To run our pipeline from start to finish with default settings, you can run the following line:
+### Updating user-edtiable variables
+To specify various variables for your run, you can edit the `MHConstructor/control.txt` file to your specific need. This is where you specify information such as the location of your data, the location of the output, and many more as described on the [User Editable Variables](#user-editable-variables) section below.
+
+### Run end-to-end pipeline
+After you specified the inputs, you can run the following line from within the MHConstructor directory to execute the whole pipeline:
 
 `singularity exec --bind <fastq_location> container/mhconstructor.sif /bin/bash MHCgenerate_v5.sh testID.txt`
 
-### To run specific submodules of interest, you can run the following(s):
+### Run specific submodules of interest
+In case you are only interested in a specific submodule for your research or analysis purpose, each of the process can be run separately using the following lines:
 - Generate BMH
 
     `$ python assignMHChaps.py <assignMHChaps.py> 
