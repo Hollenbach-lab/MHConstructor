@@ -20,15 +20,19 @@ def main():
         tmp1=(allele.iloc[0,0].split(' ')[0].split('*')[1])
         tmp2=(allele.iloc[1,0].split(' ')[0].split('*')[1])
 
+        tmp1 = tmp1.split(':')[0]
+        tmp2 = tmp2.split(':')[0]
+
+        # Uncomment for second field resolution
         # Limit the result to only include 2 resolutions: cutting it off if resolution>2
-        test1 = len(tmp1.split(':'))
-        test2 = len(tmp2.split(':'))
-        if test1 > 2:
-            spl1 = tmp1.split(':')
-            tmp1 = spl1[0]+':'+spl1[1]
-        if test2 > 2:
-            spl2 = tmp2.split(':')
-            tmp2 = spl2[0]+':'+spl2[1]
+        # test1 = len(tmp1.split(':'))
+        # test2 = len(tmp2.split(':'))
+        # if test1 > 2:
+        #     spl1 = tmp1.split(':')
+        #     tmp1 = spl1[0]+':'+spl1[1]
+        # if test2 > 2:
+        #     spl2 = tmp2.split(':')
+        #     tmp2 = spl2[0]+':'+spl2[1]
         
         drb11.append(tmp1)
         drb12.append(tmp2)

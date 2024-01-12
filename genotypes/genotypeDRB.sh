@@ -8,6 +8,7 @@ source ../control.txt
 repoDir=${binDir}/MHConstructor
 progT1K=${repoDir}/tools/T1K/run-t1k
 ids="$(cat ${repoDir}/testID.txt)"
+set -e
 
 for i in $ids; do
     echo $i
