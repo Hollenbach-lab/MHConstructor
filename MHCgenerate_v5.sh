@@ -59,22 +59,25 @@ for i in $ids; do
 	if [ "${WGSdata}" !=0 ]
 	then
 		cd ./MHC_wgsPreProcess
-		sh extractCram.sh ${i} ${chromPos} ${progSamtools}
-                R1=${i}_mhc_all_R1.fastq.gz
+		#sh extractCram.sh ${i} ${chromPos} ${progSamtools}
+                sh extractFrom1KGP.sh ${i} ${oneKGPdata} ${chromPos} ${progSamtools} ${sampleAssembly}
+
+		R1=${i}_mhc_all_R1.fastq.gz
                 R2=${i}_mhc_all_R2.fastq.gz
                 R1A="$(echo $R1 | cut -d '.' -f 1,1)"
                 R2A="$(echo $R2 | cut -d '.' -f 1,1)"
 		fastqDir=${sampleAssembly}
 		cd ..
 	fi
-
+	echo ${oneKGPdata}
 	## Option B: 1000GenomesProject data via ftp server (list of ftps)
-	if [ "${OneKGP}" !=0 ]
+	if [ "$oneKGPdata" != "0" ];
 	then
 		cd ./MHC_wgsPreProcess
 		sh extractFrom1KGP.sh ${i} ${oneKGPdata} ${chromPos} ${progSamtools} ${sampleAssembly} 
-		R1=${i}_mhc_all_R1.fastq.gz
-		R2=${i}_mhc_all_R2.fastq.gz
+		echo 'OneKGP'
+		R1=${sampleAssembly}/${i}_mhc_all_R1.fastq.gz
+		R2=${sampleAssembly}/${i}_mhc_all_R2.fastq.gz
                 R1A="$(echo $R1 | cut -d '.' -f 1,1)"
                 R2A="$(echo $R2 | cut -d '.' -f 1,1)"
 		fastqDir=${sampleAssembly}
@@ -89,6 +92,7 @@ for i in $ids; do
 		R2="$(find ${fastqDir} -name ${i}*${R2ext})"
 		R1A="$(echo $R1 | cut -d '.' -f 1,1)"
 		R2A="$(echo $R2 | cut -d '.' -f 1,1)"
+
 	fi
 ############ Preprocess Step 0.B: Assign closest 2 reference MHC haplotypes ###########
 	if [ ${assignHaps} -eq 1 ]
