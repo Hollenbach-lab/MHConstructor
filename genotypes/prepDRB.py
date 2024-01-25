@@ -18,7 +18,12 @@ def main():
         toread = f'{alleles}/{file}'
         allele = pd.read_csv(toread, sep = '\t', header = None)
         tmp1=(allele.iloc[0,0].split(' ')[0].split('*')[1])
-        tmp2=(allele.iloc[1,0].split(' ')[0].split('*')[1])
+
+        # Check whether there's only a single genotype in the _allele.tsv file
+        if len(allele) == 1:
+            tmp2=tmp1
+        else:
+            tmp2=(allele.iloc[1,0].split(' ')[0].split('*')[1])
 
         tmp1 = tmp1.split(':')[0]
         tmp2 = tmp2.split(':')[0]
