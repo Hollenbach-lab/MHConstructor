@@ -26,7 +26,7 @@ dependencies:
   - font-ttf-dejavu-sans-mono=2.37=hd3eb1b0_0
   - fontconfig=2.14.1=hef1e5e3_0
   - freetype=2.12.1=h4a9f257_0
-  - gatk=3.8=py27_0
+  - gatk4=4.3.0.0=py36hdfd78af_0
   - glib=2.69.1=he621ea3_2
   - gmcloser=1.6.2=hdfd78af_1
   - icu=58.2=he6710b0_3

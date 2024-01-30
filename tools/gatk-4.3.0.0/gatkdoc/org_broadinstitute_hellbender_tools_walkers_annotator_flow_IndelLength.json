@@ -1,9 +1,0 @@
-{
-  "summary": "Indel Length Flow Annotation",
-  "arguments": [],
-  "description": "Flow Annotation: length of indel",
-  "name": "IndelLength",
-  "group": "Flow Annotations",
-  "beta": false,
-  "experimental": false
-}

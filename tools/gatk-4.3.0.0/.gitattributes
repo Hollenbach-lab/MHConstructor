@@ -1,2 +1,0 @@
-gatk-package-4.3.0.0-local.jar filter=lfs diff=lfs merge=lfs -text
-gatk-package-4.3.0.0-spark.jar filter=lfs diff=lfs merge=lfs -text

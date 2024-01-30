@@ -1,9 +1,0 @@
-{
-  "summary": "Metrics",
-  "arguments": [],
-  "description": "",
-  "name": "BafRegressMetrics",
-  "group": "Metrics",
-  "beta": false,
-  "experimental": false
-}
