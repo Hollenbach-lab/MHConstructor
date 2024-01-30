@@ -8,17 +8,21 @@ MHConstructor is an high-throughput, haplotype-informed, MHC-specific, short rea
 To obtain the project directory, the repository can be cloned using the following command:
 
 ```
-git clone https://github.com/wadekj/MHConstructor.git
 cd ./MHConstructor
 ```
 
 To ensure a reliable run, we have containerized our image in [Singularity](https://docs.sylabs.io/guides/3.11/admin-guide/installation.html). We have tested it on Singularity version 3.11.4. The Singularity recipe file, `MHConstructor/container/mhconstructor.def`, can be built using one of the following commands:
 ```
 cd ./container
+sudo singularity build mhconstructor.sif mhconstructor.def
+cd ../
+```
+If you do not have sudo privilege, you can utilize the `fakeroot` option by Singularity which will let you build the container still, by using the command below instead: 
+```
+cd ./container
 singularity build --fakeroot mhconstructor.sif mhconstructor.def
 cd ../
 ```
-
 
 This command can take approximately an hour to create a .sif file that will need to be included when running the pipeline through Singularity.
 
@@ -30,38 +34,45 @@ To specify various variables for your run, you can edit the `MHConstructor/contr
 ### Run end-to-end pipeline
 After you specified the inputs, you can run the following line from within the MHConstructor directory to execute the whole pipeline:
 
-`singularity exec --bind <fastq_location> container/mhconstructor.sif /bin/bash MHCgenerate_v5.sh testID.txt`
+```
+singularity exec --bind <fastq_location> container/mhconstructor.sif /bin/bash MHCgenerate_v5.sh testID.txt
+```
 
 ### Run specific submodules of interest
 In case you are only interested in a specific submodule for your research or analysis purpose, each of the process can be run separately using the following lines:
 - Generate BMH
 
-    `$ python assignMHChaps.py <assignMHChaps.py> 
-<HLADRBgenotypes.csv> <C4genotypes.csv>`
+    ```
+    $ python assignMHChaps.py <assignMHChaps.py> 
+<HLADRBgenotypes.csv> <C4genotypes.csv>
+    ```
 - MHC read QC
-
-    `$ sh readQC.sh <sampleID> <path/to/R1> <path/to/R2> 
-<path/to/assembly/dir> <#ofThreads>`    
+    ```
+    $ sh readQC.sh <sampleID> <path/to/R1> <path/to/R2> 
+<path/to/assembly/dir> <#ofThreads>
+    ```    
 - MHC <i>de novo </i>assembly
-
-    `$ sh run_athena_v3.sh <sampleID>  <path/to/R1> <path/to/R2> 
-<path/to/assembly/dir> <BMHap1> <path/to/assembly/dir> 
-<path/to/bin/dir> <path/to/samtools> <path/to/Picard> 
-<startingReadCount> <insertSize> <kmerSize> 
-<expectedAvgCoverage> <BMHap2> <path/to/bin/dir> 
-<path/to/Bowtie2>`
+    ```
+    $ sh run_athena_v3.sh <sampleID> <path/to/R1> <path/to/R2> 
+    <path/to/assembly/dir> <BMHap1> <path/to/assembly/dir> 
+    <path/to/bin/dir> <path/to/samtools> <path/to/Picard> 
+    <startingReadCount> <insertSize> <kmerSize> 
+    <expectedAvgCoverage> <BMHap2> <path/to/bin/dir> 
+    <path/to/Bowtie2>
+    ```
 - MHC <i>de novo </i>scaffolding
-
-    `$ sh 
-refGuidedDeNovoAssembly_velvet_athena_scaffold_v3_target_haploid.s
-h <sampleID> <path/to/R1> <path/to/R2> <path/to/assembly/dir> 
-<path/to/assembly/dir> <insertSize> <path/to/bin/dir> <BMHap1> 
-<BMHap2> <path/to/Bowtie2> <path/to/samtools> <path/to/Picard> 
-<startingReadCount>`
+    ```
+    $ sh 
+    refGuidedDeNovoAssembly_velvet_athena_scaffold_v3_target_haploid.sh <sampleID> <path/to/R1> <path/to/R2> <path/to/assembly/dir> 
+    <path/to/assembly/dir> <insertSize> <path/to/bin/dir> <BMHap1> 
+    <BMHap2> <path/to/Bowtie2> <path/to/samtools> <path/to/Picard> 
+    <startingReadCount>
+    ```
 - MHC scaffold orientation
-
-    `$ sh orderAssembly.sh <path/to/scaffold/sequence.fasta> 
-<BMH1orBMH2> <path/to/scaffold/directory>`
+    ```
+    $ sh orderAssembly.sh <path/to/scaffold/sequence.fasta> 
+    <BMH1orBMH2> <path/to/scaffold/directory>
+    ```
 
 
 ## User Editable Variables
