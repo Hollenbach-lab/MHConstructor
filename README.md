@@ -38,43 +38,6 @@ After you specified the inputs, you can run the following line from within the M
 singularity exec --bind <fastq_location> container/mhconstructor.sif /bin/bash MHCgenerate_v5.sh testID.txt
 ```
 
-### Run specific submodules of interest
-In case you are only interested in a specific submodule for your research or analysis purpose, each of the process can be run separately using the following lines:
-- Generate BMH
-
-    ```
-    $ python assignMHChaps.py <assignMHChaps.py> 
-<HLADRBgenotypes.csv> <C4genotypes.csv>
-    ```
-- MHC read QC
-    ```
-    $ sh readQC.sh <sampleID> <path/to/R1> <path/to/R2> 
-<path/to/assembly/dir> <#ofThreads>
-    ```    
-- MHC <i>de novo </i>assembly
-    ```
-    $ sh run_athena_v3.sh <sampleID> <path/to/R1> <path/to/R2> 
-    <path/to/assembly/dir> <BMHap1> <path/to/assembly/dir> 
-    <path/to/bin/dir> <path/to/samtools> <path/to/Picard> 
-    <startingReadCount> <insertSize> <kmerSize> 
-    <expectedAvgCoverage> <BMHap2> <path/to/bin/dir> 
-    <path/to/Bowtie2>
-    ```
-- MHC <i>de novo </i>scaffolding
-    ```
-    $ sh 
-    refGuidedDeNovoAssembly_velvet_athena_scaffold_v3_target_haploid.sh <sampleID> <path/to/R1> <path/to/R2> <path/to/assembly/dir> 
-    <path/to/assembly/dir> <insertSize> <path/to/bin/dir> <BMHap1> 
-    <BMHap2> <path/to/Bowtie2> <path/to/samtools> <path/to/Picard> 
-    <startingReadCount>
-    ```
-- MHC scaffold orientation
-    ```
-    $ sh orderAssembly.sh <path/to/scaffold/sequence.fasta> 
-    <BMH1orBMH2> <path/to/scaffold/directory>
-    ```
-
-
 ## User Editable Variables
 - `binDir` - Location of software executables, eg: /home/kwade/bin
 - `projectDir` - Loctation to send MHConstructor output, eg: 
@@ -102,3 +65,17 @@ if none, use 0
 - `readCount` - Number of starting reads (in millions) to subsample fastqs, eg: 
 5, or, if no subsampling required, set to ‘all’
 - `assignHaps` - Run script to assign BMHs, yes (1), no (0)
+
+
+## Output
+The primary use of this pipeline is to process raw sequencing data and produce the consensus haplotype FASTA. This file can be found under the `consensusHap` directory in the output folder, and will follow a format of `<sample>_vs_<haplotype>.fasta` as its filename. If a sample is heterozygous, it can be mapped to two haplotypes, in which case there would exist two FASTA files for one sample.
+
+Other information such as downsampled reads or assembly files are stored in the `MHConstructor_assemblies` folder, should you be interested in looking into it.
+```
+├── consensusHap
+│   └── EPIC0345_vs_OK649231.fasta
+│   └── EPIC0345_vs_OK649232.fasta
+├── MHConstructor_assemblies
+│   └── EPIC0345_MHConstructor
+└── sam
+```
