@@ -11,20 +11,28 @@ To obtain the project directory, the repository can be cloned using the followin
 cd ./MHConstructor
 ```
 
-To ensure a reliable run, we have containerized our image in [Singularity](https://docs.sylabs.io/guides/3.11/admin-guide/installation.html). We have tested it on Singularity version 3.11.4. The Singularity recipe file, `MHConstructor/container/mhconstructor.def`, can be built using one of the following commands:
+To ensure a reliable run, we have containerized our image in [Singularity](https://docs.sylabs.io/guides/3.11/admin-guide/installation.html). We have tested it on Singularity version 3.11.4. To obtain the image, you can use one of the following commands:  
+1. Build with sudo (50 minutes)
 ```
 cd ./container
 sudo singularity build mhconstructor.sif mhconstructor.def
 cd ../
 ```
-If you do not have sudo privilege, you can utilize the `fakeroot` option by Singularity which will let you build the container still, by using the command below instead: 
+
+2. Build with `fakeroot`, if sudo is not possible (50 minutes)
 ```
 cd ./container
 singularity build --fakeroot mhconstructor.sif mhconstructor.def
 cd ../
 ```
 
-This command can take approximately an hour to create a .sif file that will need to be included when running the pipeline through Singularity.
+3. Pull the image directly from Sylabs (25 minutes)
+```
+cd ./container
+singularity pull mhconstructor.sif library://rsuseno/rsuseno/mhconstructor:latest
+cd ../
+```
+An `mhconstructor.sif` file will be created and ready to use!
 
 
 ## Usage Guide
