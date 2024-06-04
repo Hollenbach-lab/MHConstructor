@@ -8,6 +8,7 @@ MHConstructor is an high-throughput, haplotype-informed, MHC-specific, short rea
 To obtain the project directory, the repository can be cloned using the following command:
 
 ```
+git clone https://github.com/Hollenbach-lab/MHConstructor.git
 cd ./MHConstructor
 ```
 
@@ -26,7 +27,7 @@ singularity build --fakeroot mhconstructor.sif mhconstructor.def
 cd ../
 ```
 
-3. Pull the image directly from Sylabs (25 minutes)
+3. Pull the image directly from Sylabs (25 minutes, depends on your internet connection)
 ```
 cd ./container
 singularity pull mhconstructor.sif library://rsuseno/rsuseno/mhconstructor:latest
