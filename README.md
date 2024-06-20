@@ -2,7 +2,7 @@
 
 ## Project Description
 
-MHConstructor is an high-throughput, haplotype-informed, MHC-specific, short read de novo assembly method intended to further understand the role of MHC in human traits and disease studies. The full article of [MHConstructor can be found here.](https://stock.adobe.com/search?k=cat)
+MHConstructor is an high-throughput, haplotype-informed, MHC-specific, short read de novo assembly method intended to further understand the role of MHC in human traits and disease studies. The full article of [MHConstructor can be found here.](https://www.biorxiv.org/content/10.1101/2024.05.20.595060v1)
 
 ## Installation Guide
 To obtain the project directory, the repository can be cloned using the following command:
