@@ -12,25 +12,26 @@ git clone https://github.com/Hollenbach-lab/MHConstructor.git
 cd ./MHConstructor
 ```
 
-To ensure a reliable run, we have containerized our image in [Singularity](https://docs.sylabs.io/guides/3.11/admin-guide/installation.html). We have tested it on Singularity version 3.11.4. To obtain the image, you can use one of the following commands:  
-1. Build with sudo (50 minutes)
-```
-cd ./container
-sudo singularity build mhconstructor.sif mhconstructor.def
-cd ../
-```
+To ensure a reliable run, we have containerized our image in Singularity (tested on version 3.11.4). You can check whether Singularity has been installed in your system by running `singularity --version`. Please install Singularity by following their guide [here](https://docs.sylabs.io/guides/3.11/admin-guide/installation.html). 
 
-2. Build with `fakeroot`, if sudo is not possible (50 minutes)
+To obtain the image, you can use one of the following commands:  
+- Option A: Build with `fakeroot` (~50 minutes)
 ```
 cd ./container
 singularity build --fakeroot mhconstructor.sif mhconstructor.def
 cd ../
 ```
 
-3. Pull the image directly from Sylabs (25 minutes, depends on your internet connection)
+- Option B: Pull the image directly from Sylabs (~25 minutes, depends on your internet connection)
 ```
 cd ./container
 singularity pull mhconstructor.sif library://rsuseno/rsuseno/mhconstructor:latest
+cd ../
+```
+- Option C: Build with sudo (~50 minutes)
+```
+cd ./container
+sudo singularity build mhconstructor.sif mhconstructor.def
 cd ../
 ```
 An `mhconstructor.sif` file will be created and ready to use!
@@ -46,6 +47,9 @@ After you specified the inputs, you can run the following line from within the M
 ```
 singularity exec --bind <fastq_location> container/mhconstructor.sif /bin/bash MHCgenerate_v5.sh testID.txt
 ```
+`testID.txt` specifies which sample you are running.
+
+(TODO: script to automatically generate a testID.txt file from a given directory to ensure easier usage of MHConstructor)
 
 ## User Editable Variables
 - `binDir` - Location of software executables, eg: /home/kwade/bin
