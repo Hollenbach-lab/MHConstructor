@@ -6,13 +6,9 @@ From: ubuntu:22.04
     export TZ=UTC
     export DEBIAN_FRONTEND=noninteractive
 
-    # UTF-8 Settings for perl
-    export LC_CTYPE=en_US.UTF-8
-    export LC_ALL=en_US.UTF-8
-    export LANGUAGE=en_US.UTF-8
-    
     # Install system packages
     apt-get update && apt-get install -y \
+    locales \
     git \
     less \
     curl \
@@ -29,57 +25,47 @@ From: ubuntu:22.04
     libfreetype6-dev libfribidi-dev libharfbuzz-dev libfontconfig1-dev pandoc libicu-dev libjpeg-dev libpng-dev libtiff-dev make zlib1g-dev libxml2-dev libcurl4-openssl-dev libssl-dev libgit2-dev
 
 
-    # Install R 4.3.1
-    wget https://cran.r-project.org/src/base/R-4/R-4.3.1.tar.gz 
-    tar -xf R-4.3.1.tar.gz
-    cd R-4.3.1
-    ./configure --prefix=/opt/local/R --with-readline=no --with-x=no
-    make && make install && make clean
-    cd ..
-    /opt/local/R/bin/R --slave -e 'install.packages(c("data.table", "methods", "stringr", "argparser"), repos = "http://cran.us.r-project.org", dependencies = TRUE)'
-    /opt/local/R/bin/R --slave -e 'install.packages("devtools", repos="https://cloud.r-project.org/")'
-    /opt/local/R/bin/R --slave -e 'library(devtools)'
-    /opt/local/R/bin/R --slave -e 'devtools::install_github("ropensci/plotly")'
-    /opt/local/R/bin/R --slave -e 'devtools::install_github("slowkow/hlabud")'
-    
-    
-
-    # Install miniconda
-    curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -o /tmp/miniconda.sh
+    # Install Miniconda
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh
     bash /tmp/miniconda.sh -b -p /opt/conda
     rm /tmp/miniconda.sh
-    /opt/conda/bin/conda clean -t -i -p -y
-    ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh
-    echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc
-    . /opt/conda/etc/profile.d/conda.sh
-    
-    # Create conda environments
-    mkdir -p /opt/etc
-    conda env create -f env_amosPy27.yml
-    conda env create -f env_py35.yml
-    conda install -n py35 pysam
-    echo "#! /bin/bash\n\n# script to activate the conda environment" > ~/.bashrc
-    conda init bash
-    echo "\nconda activate amosPy27" >> ~/.bashrc
-    cp ~/.bashrc /opt/etc/bashrc
+    # Initialize Conda
+    /opt/conda/bin/conda init
+    # Update PATH
+    echo 'export PATH="/opt/conda/bin:$PATH"' >> /etc/profile.d/conda.sh
+    echo 'export PATH="/opt/conda/bin:$PATH"' >> ~/.bashrc
+    # Create Conda environments from YAML files
+    /opt/conda/bin/conda env create -f env_amosPy27.yml
+    /opt/conda/bin/conda env create -f env_py35.yml
+    /opt/conda/bin/conda install -n py35 pysam
+    # Clean up
+    apt-get clean
+    rm -rf /var/lib/apt/lists/*
+
+    # Install R 4.3.1
+    #wget https://cran.r-project.org/src/base/R-4/R-4.3.1.tar.gz 
+    #tar -xf R-4.3.1.tar.gz
+    #cd R-4.3.1
+    #./configure --prefix=/opt/local/R --with-readline=no --with-x=no
+    #make && make install && make clean
+    #cd ..
+    #/opt/local/R/bin/R --slave -e 'install.packages(c("data.table", "methods", "stringr", "argparser"), repos = "http://cran.us.r-project.org", dependencies = TRUE)'
+    #/opt/local/R/bin/R --slave -e 'install.packages("devtools", repos="https://cloud.r-project.org/")'
+    #/opt/local/R/bin/R --slave -e 'library(devtools)'
+    #/opt/local/R/bin/R --slave -e 'devtools::install_github("ropensci/plotly")'
 
     ln -sf /bin/bash /bin/sh
 
 %environment
-    export SINGULARITY_SHELL=/bin/bash
-    export PATH=/opt/conda/bin:$PATH
-    export PATH=/opt/local/R/bin:${PATH}
-
     # UTF-8 Settings for perl
     export LC_CTYPE=en_US.UTF-8
     export LC_ALL=en_US.UTF-8
     export LANGUAGE=en_US.UTF-8
 
-    source /opt/etc/bashrc
-    
-    # For timezone
-    TZ=UTC
-    DEBIAN_FRONTEND=noninteractive
+    # Source the Conda profile script to activate Conda
+    source /etc/profile.d/conda.sh
+    export PATH="/opt/conda/bin:$PATH"
+    #export PATH=/opt/local/R/bin:${PATH}
 
 %files
     env_amosPy27.yml

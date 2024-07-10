@@ -12,6 +12,7 @@
 
 ########### User editable variables ###########
 ### Converted to control.txt separate file ###
+source activate
 source ./control.txt
 
 
@@ -28,8 +29,6 @@ mkdir ${projectDir}
 mkdir ${assemblyDir}
 mkdir ${consDir}
 mkdir ${samDir}
-conda activate amosPy27
-conda env list
 
 
 # if [ $assignHaps == 0 ]
@@ -50,6 +49,8 @@ conda env list
 ids="$(cat $1)"
 for i in $ids; do
 	echo $i
+	conda activate amosPy27
+	conda env list
 	sampleAssembly=${assemblyDir}/${i}_MHConstructor
 	mkdir $sampleAssembly
 
@@ -143,7 +144,7 @@ for i in $ids; do
 	fi
 	cd ..
 
-	source activate py35
+	conda activate py35
 	conda env list
 
 	###### 4. Scaffold and order assembly against refHap(s) #######
