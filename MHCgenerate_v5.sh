@@ -60,13 +60,11 @@ for i in $ids; do
 	if [ "${WGSdata}" !=0 ]
 	then
 		cd ./MHC_wgsPreProcess
-		#sh extractCram.sh ${i} ${chromPos} ${progSamtools}
-                sh extractFrom1KGP.sh ${i} ${oneKGPdata} ${chromPos} ${progSamtools} ${sampleAssembly}
-
+		sh extractBamFromCram.sh ${i} ${chromPos} ${progSamtools}
 		R1=${i}_mhc_all_R1.fastq.gz
-                R2=${i}_mhc_all_R2.fastq.gz
-                R1A="$(echo $R1 | cut -d '.' -f 1,1)"
-                R2A="$(echo $R2 | cut -d '.' -f 1,1)"
+		R2=${i}_mhc_all_R2.fastq.gz
+		R1A="$(echo $R1 | cut -d '.' -f 1,1)"
+		R2A="$(echo $R2 | cut -d '.' -f 1,1)"
 		fastqDir=${sampleAssembly}
 		cd ..
 	fi
@@ -79,8 +77,8 @@ for i in $ids; do
 		echo 'OneKGP'
 		R1=${sampleAssembly}/${i}_mhc_all_R1.fastq.gz
 		R2=${sampleAssembly}/${i}_mhc_all_R2.fastq.gz
-                R1A="$(echo $R1 | cut -d '.' -f 1,1)"
-                R2A="$(echo $R2 | cut -d '.' -f 1,1)"
+		R1A="$(echo $R1 | cut -d '.' -f 1,1)"
+		R2A="$(echo $R2 | cut -d '.' -f 1,1)"
 		fastqDir=${sampleAssembly}
 		cd ..
 	fi
@@ -127,7 +125,7 @@ for i in $ids; do
 	## If heterozygous, repeat assembly using Hap2 as guide 
 	if [ ${Hap1} != ${Hap2} ]
 	then
-		assemblyLog2=log_${i}_${Hap2}_assembly.txt
+		assemblyLog2=${sampleAssembly}/log_${i}_${Hap2}_assembly.txt
 		sh mhc_assembly.sh ${i} ${R1A}_pg_${readCount}.fastq.gz ${R2A}_pg_${readCount}.fastq.gz ${readCount} ${fastqDir} ${Hap2} ${sampleAssembly} ${binDir} ${progSamtools} ${progPicard} ${insertSize} ${kmerAssembly} ${expCov} ${Hap1} ${repoDir} ${progBowtie2} >> $assemblyLog2
 	
 	fi

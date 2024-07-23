@@ -1,6 +1,6 @@
-binDir=/home/kwade/bin
-projectDir=/home/kwade/MHConstructor
-targetCapture=/home/kwade/INDIGO_Fastq
+binDir=/home/rsuseno
+projectDir=/home/rsuseno/output_MHC/output_MHC_unittest_target2
+targetCapture=/home/kwade/githubMHConstructor/MHConstructor/examples/sourceData/
 WGSdata=0
 oneKGPdata=0
 HLAgenotypes=

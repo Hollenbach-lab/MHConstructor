@@ -11,10 +11,11 @@
 	## Otherwise, like this: "/home/user/exampleDir/"
 # $2 - reference genome. If file on local server, list full directory and file name: "/home/user/exampleDir/refGenome.fasta"
 	## Otherwise, if on remote server, input full ftp path
+# $3 - path to samtools
 
 ## Dependencies- requires samtools to be installed
 
-progSamtools=/usr/bin/samtools-1.9/samtools
+progSamtools=${3}
 
 #for f in ${1}*.cram;
 #do 
