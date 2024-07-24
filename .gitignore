@@ -2,3 +2,4 @@ container/mhconstructor.sif
 MHC_readQC/fastp.html
 MHC_readQC/fastp.json
 refMHC/hg38Patch11.mni
+MHC_wgsPreProcess/GRCh38_full_analysis_set_plus_decoy_hla.*
