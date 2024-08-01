@@ -57,7 +57,7 @@ for i in $ids; do
 
 ######### Pre-process: Step 0.A. Check which type of data the user has, extract WGS reads if needed ######
 	## Option A: In-house WGS data that has been aligned to a reference genome (.cram)
-	if [ "${WGSdata}" !=0 ]
+	if [ "${WGSdata}" != 0 ]
 	then
 		cd ./MHC_wgsPreProcess
 		sh extractBamFromCram.sh ${i} ${chromPos} ${progSamtools}

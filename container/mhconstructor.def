@@ -54,7 +54,7 @@ From: ubuntu:22.04
     #/opt/local/R/bin/R --slave -e 'library(devtools)'
     #/opt/local/R/bin/R --slave -e 'devtools::install_github("ropensci/plotly")'
 
-    ln -sf /bin/bash /bin/sh
+    ln -sf /usr/bin/bash /usr/bin/sh
 
 %environment
     # UTF-8 Settings for perl
