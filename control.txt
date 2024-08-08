@@ -1,8 +1,8 @@
 binDir=/home/rsuseno
-projectDir=/home/rsuseno/output_MHC/output_MHC_unittest_target2
-targetCapture=/home/kwade/githubMHConstructor/MHConstructor/examples/sourceData/
+projectDir=/home/rsuseno/output_MHC/output_MHC_unittest_onekgp
+targetCapture=0
 WGSdata=0
-oneKGPdata=0
+oneKGPdata=/home/kwade/githubMHConstructor/MHConstructor/examples/sourceData/ftp_link.txt
 HLAgenotypes=
 C4genotypes=
 R1ext=R1_001.fastq.gz
@@ -13,4 +13,4 @@ insertSize=600
 expCov=60
 kmerAssembly=51
 readCount=5
-assignHaps=1
+assignHaps=0

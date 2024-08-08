@@ -33,8 +33,8 @@ fi
 
 if [ ${readNum} -lt ${readInt} ]
 then
-	mv ${2}_pg.fastq.gz ${2}_pg_${7}.fastq
-	mv ${4}_pg.fastq.gz ${4}_pg_${7}.fastq
+	mv ${2}_pg.fastq.gz ${2}_pg_${7}.fastq.gz
+	mv ${4}_pg.fastq.gz ${4}_pg_${7}.fastq.gz
 fi
 gzip ${2}_pg_${7}.fastq
 gzip ${4}_pg_${7}.fastq

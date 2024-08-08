@@ -28,7 +28,7 @@ mkdir ${workPath}
 
 
 # set variables #########################################
-ref=${15}/refMHCh/${6}.fasta
+ref=${15}/refMHC/${6}.fasta
 refRed=${15}/refMHC/${6}
 
 primerFile=${workPathFiles}/testPrimers.fasta

@@ -43,12 +43,12 @@ From: ubuntu:22.04
     rm -rf /var/lib/apt/lists/*
 
     # Install R 4.3.1
-    #wget https://cran.r-project.org/src/base/R-4/R-4.3.1.tar.gz 
-    #tar -xf R-4.3.1.tar.gz
-    #cd R-4.3.1
-    #./configure --prefix=/opt/local/R --with-readline=no --with-x=no
-    #make && make install && make clean
-    #cd ..
+    wget https://cran.r-project.org/src/base/R-4/R-4.3.1.tar.gz 
+    tar -xf R-4.3.1.tar.gz
+    cd R-4.3.1
+    ./configure --prefix=/opt/local/R --with-readline=no --with-x=no
+    make && make install && make clean
+    cd ..
     #/opt/local/R/bin/R --slave -e 'install.packages(c("data.table", "methods", "stringr", "argparser"), repos = "http://cran.us.r-project.org", dependencies = TRUE)'
     #/opt/local/R/bin/R --slave -e 'install.packages("devtools", repos="https://cloud.r-project.org/")'
     #/opt/local/R/bin/R --slave -e 'library(devtools)'
@@ -65,7 +65,7 @@ From: ubuntu:22.04
     # Source the Conda profile script to activate Conda
     source /etc/profile.d/conda.sh
     export PATH="/opt/conda/bin:$PATH"
-    #export PATH=/opt/local/R/bin:${PATH}
+    #xport PATH=/opt/local/R/bin:${PATH}
 
 %files
     env_amosPy27.yml

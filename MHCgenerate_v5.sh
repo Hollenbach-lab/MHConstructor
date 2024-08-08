@@ -104,6 +104,11 @@ for i in $ids; do
 		echo $Hap2
 		cd ..
 	fi 
+	if [ ${assignHaps} -eq 0 ]
+	then
+		Hap1="hg38"
+		Hap2="hg38"
+	fi
 
 ############## 1. Read quality filter ###########
 	cd ./MHC_readQC
