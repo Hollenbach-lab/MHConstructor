@@ -25,10 +25,10 @@ assemblyDir=${projectDir}/MHConstructor_assemblies
 consDir=${projectDir}/consensusHap
 samDir=${projectDir}/sam
 RefMHChaplotypes=${repoDir}/MHC_hapAssign/mhcRefHaps.txt
-mkdir ${projectDir}
-mkdir ${assemblyDir}
-mkdir ${consDir}
-mkdir ${samDir}
+# mkdir ${projectDir}
+# mkdir ${assemblyDir}
+# mkdir ${consDir}
+# mkdir ${samDir}
 
 
 # if [ $assignHaps == 0 ]
@@ -36,13 +36,23 @@ mkdir ${samDir}
 # 	$Hap1== 'hg38'
 # 	$Hap2== 'hg38'
 # fi
-# if [ $assignHaps == 1 ]
-# then
-# 	mkdir ${repoDir}/MHC_hapAssign/bestHaps
-# 	cd MHC_hapAssign
-# 	python assignMHChaps.py ${RefMHChaplotypes} ${HLAgenotypes} ${C4genotypes}
-# 	cd ..
-# fi
+if [ ${assignHaps} -eq 1 ]
+then
+	if [ ! -d "${repoDir}/MHC_hapAssign/bestHaps" ]
+	then 
+		mkdir ${repoDir}/MHC_hapAssign/bestHaps
+		cd MHC_hapAssign
+		python assignMHChaps.py ${RefMHChaplotypes} ${HLAgenotypes} ${C4genotypes}
+		cd ..
+	fi
+fi
+if [ ${assignHaps} -eq 0 ]
+then
+	Hap1="hg38"
+	Hap2="hg38"
+fi
+
+exit 125
 
 #conda activate amosPy27
 #conda env list
@@ -104,11 +114,7 @@ for i in $ids; do
 		echo $Hap2
 		cd ..
 	fi 
-	if [ ${assignHaps} -eq 0 ]
-	then
-		Hap1="hg38"
-		Hap2="hg38"
-	fi
+
 
 ############## 1. Read quality filter ###########
 	cd ./MHC_readQC
