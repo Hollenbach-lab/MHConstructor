@@ -25,10 +25,10 @@ assemblyDir=${projectDir}/MHConstructor_assemblies
 consDir=${projectDir}/consensusHap
 samDir=${projectDir}/sam
 RefMHChaplotypes=${repoDir}/MHC_hapAssign/mhcRefHaps.txt
-# mkdir ${projectDir}
-# mkdir ${assemblyDir}
-# mkdir ${consDir}
-# mkdir ${samDir}
+mkdir ${projectDir}
+mkdir ${assemblyDir}
+mkdir ${consDir}
+mkdir ${samDir}
 
 
 # if [ $assignHaps == 0 ]
@@ -52,7 +52,7 @@ then
 	Hap2="hg38"
 fi
 
-exit 125
+
 
 #conda activate amosPy27
 #conda env list
