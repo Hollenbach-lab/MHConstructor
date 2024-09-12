@@ -2,55 +2,34 @@
 
 #!/bin/bash
 
-## Fastq processing- adapted from:
+## Adapted from:
 #########################################################
 #  Reference-guided de novo assembly - SOAP
 # ====================================================
 # by Heidi Lischer, 2015/2016
+# https://bitbucket.org/HeidiLischer/refguideddenovoassembly_pipelines/src/master/
 #########################################################
-# $1- sampleID
-# $2- primer file.txt (EPIC or African)
+## Edited: 9/11/24
+## Adapted by: wadekj and rsuseno
 
-## 1/09/23
-## frankenstein --> athena
-## v1
-## kjwade
-
-##To initialize conda env:
-#source /home/arenschen/anaconda3/etc/profile.d/conda.sh
-#conda activate amosPy27
-#workPathFiles=/home/kwade/yokoyamaCollab
 workPathFiles=${4}
-#workPathFiles=/home/kwade/
-#workPathFiles=/home/kwade/newSayerCollab
 
 # set work path ---------------------------
-#workPath=${workPathFiles}/${1}_efi_GOLD_v2_pg_20_X600_nomatesB
-#workPath=${workPathFiles}/4_draftAssemblyJan23/whiteMS/${1}_athena_v1
-#workPath=/home/kwade/4_draftAssemblyAthenav1/EPIC0692_athena_v1_3M_APD_OT
 workPath=${5}
 
 # log file
 log=${workPath}/log_${1}.txt
 
 
-#python /home/kwade/MHCassembly/extractPrimers.py ${workPath} $1 $2
-
 # set variables #########################################
-#workPathFiles=/home/LAB_PROJECTS/mhcFastqMS
 HapA=${7}/MHC_generate/refMHChaps/${8}
 HapB=${7}/MHC_generate/refMHChaps/${9}
 
-#primerFile=/home/INDIGO_Fastq/${1}_QC/${1}_primers.fasta
-#primerFileMP=/home/hlischer/Programs/AdapterSeqMP_new.fa
-#primerFile=${workPathFiles}/testPrimers.fasta
-#primerFileMP=${workPathFiles}/testPrimers.fasta
 
 
 NThreads=8      # set the number of threads of every parallelizable step
 maxReadLength=155
-#kmer=61         #define best K
-kmer=63
+kmer=${13}	
 
 # paired-end libraries -------------------
 name=${1}           # set name of your species
@@ -65,18 +44,9 @@ reads2=(${3})
 # short names of libraries
 shortNames=${1}
 
-#originalR1=(${4})
-#originalR2=(${5})
 
-
-
-# set work path ---------------------------
-#workPath=${workPathFiles}/${1}_QC
-# log file
-#log=${workPath}/log_${1}_QC.txt
 
 # Programs -------------------------------- 
-## Replace most of these with conda env 
 progPath=${7}
 progIdba=idba
 progFastQC=fastqc ##conda
@@ -84,8 +54,6 @@ progTrimmomatic=trimmomatic ##conda
 progSamtools=${11}
 progVcfutils=vcfutils.pl
 progBcftools=${progPath}/tools/bcftools-1.16/bcftools
-# progBcftools=${progPath}/tools/bcftools-1.9/bcftools
-# progBcftools=bcftools
 progBamtools=bamtools ##conda
 progBedtools=bedtools ##conda
 progPicard=${12}
@@ -123,7 +91,6 @@ progSplitSeqLowCov=${progPath}/MHC_assembly/SplitSeqLowCov.jar
   amosFolder=${5}/${1}_${13}_${8}/AMOScmp
   mkdir $amosFolder
   cd $amosFolder
-  #amosSupercontigs=${amosFolder}/${supercontigs}.fa
   amosSupercontigsUnique=${amosFolder}/Amos_supercontigs_unique.fa
 
 #prepare reference
@@ -146,7 +113,6 @@ progSplitSeqLowCov=${progPath}/MHC_assembly/SplitSeqLowCov.jar
     supercontFailUnpair[i]=${amosFolder}/${shortNames[i]}_failUnp.fastq
     supercontMappedFiltered[i]=${amosFolder}/${shortNames[i]}.filtered.sorted.bam
     (
-      #echo "(${progBowtie2} --sensitive -p 1 -q --phred33 -I ${insLow[i]} -X ${insHigh[i]} -x ${amosSupercontigsUnique%.fa} -1 ${read1TrimPair[i]} -2 ${read2TrimPair[i]} | ${progSamtools} view -bS - | ${progSamtools} sort - -T ${shortNames[i]} -o ${supercontMappedAll[i]})"
        ${progBowtie2} --sensitive -p 8 -q --phred33 -I 0 -X ${6} -x ${amosSupercontigsUnique%.fa} -1 ${read1TrimPair[i]} -2 ${read2TrimPair[i]} | ${progSamtools} view -bS - | ${progSamtools} sort - -T ${shortNames[i]} -o ${supercontMappedAll[i]}
       ${progSamtools} index ${supercontMappedAll[i]}
 
@@ -154,8 +120,6 @@ progSplitSeqLowCov=${progPath}/MHC_assembly/SplitSeqLowCov.jar
       ${progSamtools} view -b -f 4 ${supercontMappedAll[i]} > ${supercontUnmapped[i]}
       ${progSamtools} view -b -f 9 ${supercontUnmapped[i]} > ${supercontUnmapped[i]%.sorted.bam}_pair.sorted.bam
       ${progPicard} SamToFastq I=${supercontUnmapped[i]%.sorted.bam}_pair.sorted.bam FASTQ=${supercontFailPair[i]%.fastq}.1.fastq F2=${supercontFailPair[i]%.fastq}.2.fastq
-      #rm ${supercontUnmapped[i]%.sorted.bam}_pair.sorted.bam
-      #${progSamtools} view -b -F 8 ${supercontUnmapped[i]} | ${progBamtools} convert -format fastq -out ${supercontFailUnpair[i]}
       ${progSamtools} view -b -F 8 ${supercontUnmapped[i]} | ${progSamtools} bam2fq > ${supercontFailUnpair[i]}
             ${progBamtools} stats -in ${supercontMappedAll[i]} >> $log
       echo "--> ${supercontMappedAll[i]}" >> $log
@@ -176,9 +140,6 @@ progSplitSeqLowCov=${progPath}/MHC_assembly/SplitSeqLowCov.jar
 ##########################################################
   echo "merge contigs..."
   echo "merge contigs..." >> $log
-  #amosFolder=${5}/AMOScmpDiploid
-  #amosSupercontigs=${amosFolder}/${supercontigs}.fa
-  #amosSupercontigsUnique=${5}/${name}_diploid_supercontigs_uniq.fa  
   mergedFolder=${workPath}/${1}_${13}_${8}/merged_corr
   mkdir $mergedFolder
   cd $mergedFolder
@@ -272,11 +233,7 @@ progSplitSeqLowCov=${progPath}/MHC_assembly/SplitSeqLowCov.jar
   ## apply variants to create consensus seq
   cat ${merged} | ${progBcftools} consensus ${merged%.fa}_corr.vcf.gz  > ${mergedCorr}
   
-  ##*${progBcftools} mpileup -d 20000 -f ${merged} ${mergedMappedMerged} | ${progBcftools} call -c | ${progVcfutils} vcf2fq -d 1 > ${mergedCorr}
-  #remove start and end N
   mergedCorrWN=${mergedCorr}
-  #echo ${mergedCorrWN} >> $log
-  #java -jar ${progRemovShortSeq} -i ${mergedCorr} -o ${mergedCorrWN} -length 100 -n -fq >> $log
 
   #get statistics
   echo ${mergedCorrWN} >> $log
@@ -318,8 +275,6 @@ progSplitSeqLowCov=${progPath}/MHC_assembly/SplitSeqLowCov.jar
  
 
   mergedCorrMappedFilteredMerged=${mergedFolder}/${name}_corrWN.filtered.sorted.bam
-  ##mergedCorrMappedFilteredMerged=${mergedFolder}/${shortNames[i]}_corrWN_all.sorted.bam
-  #${progSamtools} merge -f ${mergedCorrMappedFilteredMerged} ${mergedCorrMappedFiltered[*]}
   
   ## 11/1
   ${progBedtools} genomecov -ibam ${mergedCorrMappedFilteredMerged} -bga > ${mergedCorrWN%.fa}_filteredCov.txt
@@ -352,8 +307,6 @@ progSplitSeqLowCov=${progPath}/MHC_assembly/SplitSeqLowCov.jar
       libList=${lib[i]}
       forwardReads=${read1TrimPair[i]}
       reverseReads=${read2TrimPair[i]}
-      #forwardReads=${read1original[i]}
-      #reverseReads=${read2original[i]}
      else
       libList=${libList},${lib[i]}
       forwardReads=${forwardReads},${read1TrimPair[i]}
@@ -368,7 +321,6 @@ progSplitSeqLowCov=${progPath}/MHC_assembly/SplitSeqLowCov.jar
   scafFile=${name}_${kmer}
 
 
-  ### 3/1/23 -- left off here. Finish updating SOAP commands** ######
   ${progFusion}SOAPdenovo-fusion -D -c ${mergedCorrWN%.fa}_splitFiltered.fa -K ${kmer} -g ${scafFile} -p ${NThreads}
   #SOAPdenovo-127mer map -s ${soapConf} -g ${scafFile} -p ${NThreads}
   #SOAPdenovo-127mer scaff -g ${scafFile} -p ${NThreads} -F
@@ -380,20 +332,16 @@ progSplitSeqLowCov=${progPath}/MHC_assembly/SplitSeqLowCov.jar
 
   GapCloser -a ${scafFile}.scafSeq -b soap.config -o ${scafFile}_final.fasta -l 155 -t ${NThreads}
 
-  #remove scaffolds < 200 bp ----------
-  #scafSeq=${scafFolder}/${name}_scafSeq.fa
+  #remove scaffolds < 100 bp ----------
   scafSeq=${scafFolder}/${name}_scafSeq.fa
   
   #echo ${scafFile}.scafSeq >> $log
   java -jar ${progRemovShortSeq} -i ${scafFile}_final.fasta -o ${scafFile}_final_100.fasta -length 100 >> $log
-  #java -jar ${progRemovShortSeq} -i ${scafSeq} -o ${scafSeq%.fa}_500.fa -length 500 >> $log
-  #java -jar ${progRemovShortSeq} -i ${scafSeq} -o ${scafSeq%.fa}_1000.fa -length 1000 >> $log
 
   #get statistics
   echo ${scafSeq} >> $log
   java -jar ${progFastaStats} -i ${scafFile}_final.fasta -min 100 >> $log
   java -jar ${progFastaStats} -i ${scafFile}_final.fasta -min 500 >> $log
-  #java -jar ${progFastaStats} -i ${scafSeq} -min 1000 >> $log
 
   #map reads against scaffolds
   ${progBowtie2}-build ${scafFile}_final_100.fasta ${scafFile}_final_100

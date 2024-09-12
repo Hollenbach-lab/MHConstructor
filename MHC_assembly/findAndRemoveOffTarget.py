@@ -1,7 +1,8 @@
 ## Script to process .paf output and find unassembled contigs that map
 ## outside MHC
 ## 03/20/23
-## wadekj
+## Edited: 9/11/24
+## Authors: wadekj and susenor
 
 import sys
 from collections import defaultdict

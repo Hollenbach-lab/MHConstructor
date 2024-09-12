@@ -39,7 +39,7 @@ def main():
 
     ## drHaps: [DR allele A, DR allele B]
     drHaps=getDRHaps(drGenos)
-
+    
     ## c4Hap: [sampleID][c4A/B]=c4L/S
     c4Hap=getC4hap(c4Genos)
 
@@ -55,41 +55,43 @@ def createHapDict(haps):
         hapDict[drb[i]][C4AB[i]][C4LS[i]]=refs[i]
     return hapDict
 
-## DRB1.1 and .2 are columns 29 and 30 (0-based)
 def getDRgenos(hlaGenos):
     drGenos=defaultdict(lambda: defaultdict(list))
     hlaGenos.next()
     fails=[]
     for hla in hlaGenos:
+        hla=hla.strip('\n')
         hla=re.split(',|\t', hla)
         sample=hla[0]
-        drb=1
-        for n in range(29,41,2):
-            drGenos[sample][drb].append(hla[n])
-            drGenos[sample][drb].append(hla[n+1])
-            drb+=1
+        drA=hla[1].split(':')[0]
+        drB=hla[2].split(':')[0]
+        if drA=='X' or drA=='NA':
+            drGenos[sample]['DRB1'].append('X')
+        else:
+            drGenos[sample]['DRB1'].append(int(drA))
+        if drB=='X' or drB=='NA':
+            drGenos[sample]['DRB1'].append('X')
+        else:
+            drGenos[sample]['DRB1'].append(int(drB))
+
     return drGenos
 
 def getDRHaps(drGenos):
     drHapDict=defaultdict(list)
     for s in sorted(drGenos.keys()):
         drhaps=[]
-        for drb in drGenos[s][1]:
-            try:
-                f1=int(drb.split(':')[0])
-            except:
-                f1=drb
-            if f1==1 or f1==10 and any("X" in j for j in drGenos[s][3]) and any("X" in j for j in drGenos[s][4]) and any("X" in j for j in drGenos[s][5]):
+        for drb in drGenos[s]['DRB1']:
+            if drb==1 or drb==10:
                 drhaps.append('DR1')
-            elif f1==15 or f1==16 and any(":" in j for j in drGenos[s][5]):
+            elif drb==15 or drb==16:
                 drhaps.append('DR2')
-            elif f1==3 or f1==11 or f1==12 or f1==13 or f1==14 and any(":" in j for j in drGenos[s][3]):
+            elif drb==3 or drb==11 or drb==12 or drb==13 or drb==14:
                 drhaps.append('DR3')
-            elif f1==4 or f1==9 or f1==7 and any(":" in j for j in drGenos[s][4]):
+            elif drb==4 or drb==9 or drb==7:
                 drhaps.append('DR4')
-            elif f1==8 and any("X" in j for j in drGenos[s][3]) and any("X" in j for j in drGenos[s][4]) and any("X" in j for j in drGenos[s][5]) and  any("X" in j for j in drGenos[s][6]):
+            elif drb==8:
                 drhaps.append('DR8')
-            elif f1=='X':
+            elif drb=='X':
                 drhaps.append('X')
             else:
                 novel=[]
@@ -109,9 +111,10 @@ def getC4hap(c4Genos):
         c4AB=''
         c4=c4.strip('\n')
         c4=re.split(',|\t', c4)
-        sample=c4[1].replace('"','')
-        c4A=int(c4[2])
-        c4B=int(c4[4])
+        sample=c4[7]
+        print c4
+        c4A=int(c4[1])
+        c4B=int(c4[2])
         if c4A >0 and c4B > 0:
             c4AB='AB'
         elif c4A ==1 and c4B== 0:
@@ -126,8 +129,8 @@ def getC4hap(c4Genos):
             c4AB='NA'
         else:
             c4AB='CNV'
-        c4S=int(c4[7])
-        c4L=int(c4[8])
+        c4S=int(c4[4])
+        c4L=int(c4[3])
         c4LS=''
         if c4L>0 and c4S>0:
             c4LS='LS'
@@ -151,11 +154,11 @@ def assignMHCHaps(hapDict,drHap,c4Hap):
     for sample in sorted(drHap.keys()):
         o=str('./bestHaps/'+sample+'_bestMHChaps.txt')
         out=open(o,'w')
-        #out.write('SampleID\tbestMHChap\tDR\tC4AB\tC4LS\tMatchCategory\n')
+        
         for dr in drHap[sample]:
-            c4AB=c4Hap[sample].keys()[0]
-            c4LS=c4Hap[sample][c4AB]
             try:
+                c4AB=c4Hap[sample].keys()[0]
+                c4LS=c4Hap[sample][c4AB]
                 mhc=hapDict[dr][c4AB][c4LS]
                 out.write('%s\t%s\t%s\t%s\t%s\tFull\n'%(sample,mhc,dr, c4AB,c4LS))
 

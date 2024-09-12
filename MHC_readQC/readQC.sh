@@ -1,5 +1,10 @@
 #!/bin/bash
+## Read QC
+## Poly-G removal, read subsampling (if desired), and QC filtering
+## Edited: 9/11/24
+## Authors: wadekj and rsuseno
 
+### Input arguments ###
 # $1 - full R1.fastq file location
 # $2 - R1 ID name
 # $3 - full R2.fastq file location
@@ -9,12 +14,12 @@
 # $7 - readCount (in millions)
 # $8 - sample ID
 # $9 - fastqDir
+
 progFastQC=fastqc ##conda
 progTrimmomatic=trimmomatic ##conda
 readLog=${5}/log_${8}_readQC.txt
 million=1000000
 declare -i readNum=$7
-# readNum=$7
 readInt=`expr ${readNum} \* ${million}`
 readIntHalf=`expr ${readInt} / 2`
 
@@ -43,18 +48,22 @@ gzip ${4}_pg_${7}.fastq
 names=(${8})
 reads1=(${2}_pg_${7}.fastq.gz)
 reads2=(${4}_pg_${7}.fastq.gz)
-# names=${8}
-# reads1=${2}_pg_${7}.fastq.gz
-# reads2=${4}_pg_${7}.fastq.gz
 
 cd ${9}
 
-## Additional pre-processing from Lischer and Shimizu, 2017
+
+## Adapted from:
+#########################################################
+#  Reference-guided de novo assembly - SOAP
+# ====================================================
+# by Heidi Lischer, 2015/2016
+# https://bitbucket.org/HeidiLischer/refguideddenovoassembly_pipelines/src/master/
+#########################################################
+
 # 1. Step: quality/adapter trimming and quality check:
 #######################################################
   # quality check ----------
   echo "quality check of raw reads..."
-  # ${progFastQC} -t ${6} -o ${5} ${reads1} ${reads2}
   for i in ${!names[*]};  #for all indexes in the array
   do
     ${progFastQC} -t ${6} -o ${5} ${reads1[i]} ${reads2[i]}
@@ -65,14 +74,7 @@ cd ${9}
   # - remove leading and trailing low quality basses (<3) or N
   # - 4 base sliding window -> remove when average quality is < 15
   # - remove reads which are shorter than 40 bp
-  echo "quality/adapter trimming..."
-  # cd $5
-  # read1TrimPair=${5}${names}_R1_trimPair.fastq
-  # read1TrimUnPair=${5}${names}_R1_trimUnPair.fastq
-  # read2TrimPair=${5}${names}_R2_trimPair.fastq
-  # read2TrimUnPair=${5}${names}_R2_trimUnPair.fastq
-  # ${progTrimmomatic} PE -threads ${6} ${reads1} ${reads2} ${read1TrimPair} ${read1TrimUnPair} ${read2TrimPair} ${read2TrimUnPair} LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:40 
- 
+  echo "quality/adapter trimming..." 
   cd $5
   read1TrimPair=()
   read1TrimUnPair=()
@@ -92,7 +94,6 @@ cd ${9}
 
   # quality check ----------
   echo "quality check of trimmed reads..."
-  # ${progFastQC} -t ${6} -o ${5} ${read1TrimPair} ${read2TrimPair} ${read1TrimUnPair} ${read2TrimUnPair}
   for i in ${!names[*]}  #for all indexes in the array
   do
     ${progFastQC} -t ${6} -o ${5} ${read1TrimPair[i]} ${read2TrimPair[i]} ${read1TrimUnPair[i]} ${read2TrimUnPair[i]}

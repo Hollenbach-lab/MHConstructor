@@ -3,6 +3,8 @@ import pandas as pd
 import sys
 
 # A supporting script for genotypeDRB.sh to format the HLA-DRB1 genotypes to a nice tabular format
+## Edited: 9/11/24
+## Authors: susenor and wadekj
 
 def main():
     # alleles = "/home/rsuseno/MHConstructor/genotypes/alleles"

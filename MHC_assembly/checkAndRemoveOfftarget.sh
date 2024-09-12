@@ -1,16 +1,13 @@
 #! /bin/bash
-## Script to blast full MHC assembly to a ref seq
-## Extract variation from the output blast files
-## convert into vcf format
-## 1/20/23
-
-## updated: 08/18/23
-## Aligns full supercontig set to the ref, instead of just unassembled
-## wadekj
+## Aligns full supercontigs+contigs from unmapped reads set to full hg38 genome sequence
+## Identifies any contigs that exhibit off target mapping elsewhere in the genome and removes them
+## Edited: 09/11/24
+## Authors: wadekj and susenor
 
 
 ## Args [1] sampleID [2] hg38 [3] assembly file .fa [4] working dir folder </home/LAB_PROJECTS/MHC_PROJECT/4_draftAssemblyAthenav1/sampleID/
 ## [5] HapB ID [6] HapA ID 
+
 ## Map unaligned contigs against hg38 genome
 minimap2 -d ../refMHC/${2}.mni ../refMHC/${2}.fa
 

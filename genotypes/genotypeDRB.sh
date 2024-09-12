@@ -5,6 +5,8 @@
 ## The sample ID to run can be modified in ../testID.txt
 ## Output: a directory 'alleles' with all the T1K result and 'HLAgenotypes.csv' which processed
 ##         the result to a format that fits MHConstructor
+## Edited: 9/11/24
+## Authors: susenor and wadekj
 
 source ../control.txt
 repoDir=${binDir}/MHConstructor

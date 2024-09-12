@@ -1,8 +1,10 @@
 #! /bin/bash
 ## Script to access the ftp location of a .cram file and extract MHC
 ## specifically designed to access 1000genomesProject data
+## Includes extraction from reads that have aligned to decoy and alt MHC chromosomes
 ## 09/12/23
-## wadekj
+## Edited: 9/11/24
+## Authors: wadekj and susenor
 
 # $1 - sample ID
 # $2 - ftp location list file

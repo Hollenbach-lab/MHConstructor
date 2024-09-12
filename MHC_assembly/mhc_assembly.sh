@@ -1,23 +1,21 @@
 #!/bin/bash
 
-## Fastq processing- adapted from:
+## Adapted from:
 #########################################################
 #  Reference-guided de novo assembly - SOAP
 # ====================================================
 # by Heidi Lischer, 2015/2016
+# https://bitbucket.org/HeidiLischer/refguideddenovoassembly_pipelines/src/master/
 #########################################################
 
-## version 3
 ## 08/08/23
+## Edited 9/11/24
+## Adapted by: wadekj and susenor
 
-##To initialize conda env:
-#conda activate amosPy27
-
-#progPath=${8}
 progPath=${15}
-
 workPathFiles=${5}
 readQCDir=${7}
+
 # set work path ---------------------------
 workPath=${7}/${1}_${4}_${6}
 
@@ -37,7 +35,8 @@ primerFileMP=${workPathFiles}/testPrimers.fasta
 NThreads=8      # set the number of threads of every parallelizable step
 maxReadLength=155
 kmer=${12}         #define best K
-declare -i expCov=${13}
+expCov=${13}
+expCovUnmap=${17}
 
 # paired-end libraries -------------------
 name=$1           # set name of your species
@@ -57,15 +56,12 @@ shortNames=(${1})
 progIdba=idba
 progFastQC=fastqc ##conda
 progTrimmomatic=trimmomatic ##conda
-#progSamtools=${progPath}/samtools-1.16.1/samtools
 progSamtools=${9}
 progVcfutils=vcfutils.pl
-#progBcftools=${progPath}/bcftools-1.16.1/bcftools
 progBcftools=${15}/tools/bcftools-1.16/bcftools
 progBamtools=bamtools ##conda
 progBedtools=bedtools ##conda
 progPicard=${10}
-#progBowtie2=/home/kwade/bin/bowtie2-2.4.2-sra-linux-x86_64/bowtie2
 progBowtie2=${16}
 progSeqtk=seqtk ##conda
 progNucmer=nucmer ## installed through 'mummer'
@@ -109,9 +105,8 @@ progSplitSeqLowCov=${15}/MHC_assembly/SplitSeqLowCov.jar
   java -jar ${progRemovShortSeq} -i $ref -o ${refRed}.fa -length 1000
 
   #create index files
-  ### *** Need to replace when picard is integrated ** #####
-  ##${progSamtools} faidx ${refRed}.fa
-  ##${progPicard} CreateSequenceDictionary R=${refRed}.fa O=${refRed}.dict
+  ${progSamtools} faidx ${refRed}.fa
+  ${progPicard} CreateSequenceDictionary R=${refRed}.fa O=${refRed}.dict
 
   # map reads against reference ----------
   echo "run reference mapping..."
@@ -175,9 +170,7 @@ progSplitSeqLowCov=${15}/MHC_assembly/SplitSeqLowCov.jar
   
   #merge alignment files
   mappedMerged=${workPath}/${name}.sorted_mapped
-  #rm ${mappedMerged}.bam
   ${progSamtools} merge -f ${mappedMerged}.bam ${mapped[*]}
-  #${progSamtools} merge -f ${mappedMerged}.bam ${mapped[*]} ${mateMapped[*]}
   # get blocks and superblocks ----------
   echo "get blocks and superblocks..."
   echo "get blocks and superblocks..." >> $log
@@ -185,7 +178,7 @@ progSplitSeqLowCov=${15}/MHC_assembly/SplitSeqLowCov.jar
   #get coverage along genome
   covFile=${workPath}/${name}_coverage.txt
   ${progBedtools} genomecov -ibam ${mappedMerged}.bam -bga > ${covFile}
-  #${progBedtools} genomecov -ibam ${mappedMerged}.bam -bga > ${covFile}
+  
   #only proparly paired reads
   ${progSamtools} view -bf 0x2 ${mappedMerged}.bam | ${progSamtools} sort - -n | ${progBedtools} bamtobed -i - -bedpe | awk '$1 == $4' | cut -f 1,2,6 | sort -k 1,1 | ${progBedtools} genomecov -i - -bga -g ${refRed}.fa.fai > ${covFile%.txt}Paired.txt
 
@@ -199,7 +192,6 @@ progSplitSeqLowCov=${15}/MHC_assembly/SplitSeqLowCov.jar
 #######################################################
   echo "deNovo assembly within superblocks..."
   echo "deNovo assembly within superblocks..." >> $log
-  #source /home/kwade/.conda/envs/assembleMHC/bin/
 
   cd ${workPath}
   velvetRes=${workPath}/velvetResults
@@ -243,10 +235,8 @@ progSplitSeqLowCov=${15}/MHC_assembly/SplitSeqLowCov.jar
     printf "  echo \$blockNb >> $logout\n" >> ${fileout}
     printf "\n" >> ${fileout}
     printf "  #extract sequence names within specified region\n" >> ${fileout}
-    #block="$(sed -n "${blockNb}p" $file)"
 
     echo "Added #############"
-    #echo "$(\$block)"
     seqNames=()
     seqBam=()
     subSeq1=()
@@ -266,7 +256,6 @@ progSplitSeqLowCov=${15}/MHC_assembly/SplitSeqLowCov.jar
       printf " ${progSamtools} fastq -1 1_${subSeq1[i]} -2 1_${subSeq2[i]} ${seqBam[i]}\n" >> ${fileout}
      
       #extract paired reads with one pair unmapped
-      #2- First in pair didn't map, other did
       ### 10/19/22- Correction: from samtools doc: 72- mapped read is first in pair, other didn't map
       printf "  ${progSamtools} view  -b -f 72 ${seqBam[i]} | ${progBamtools} convert -format fastq | paste - - - - | sort -k 1,1 -t \" \" | tr \"\\\t\" \"\\\n\" > 2_${subSeq1[i]}\n" >> ${fileout}
       ##  10/19/22-Switched to '2.2'
@@ -341,11 +330,9 @@ progSplitSeqLowCov=${15}/MHC_assembly/SplitSeqLowCov.jar
   fq2fa ${bowtieFailUnpairMerged[*]} ${subSeqFasta[${#subSeqFasta[*]}-1]}
   cat ${subSeqFasta[*]} > subseq.fa
 
-  ## Replacing with hard code expected coverage for now 8/23/23 ##
-  ##expCovLow=`expr $expCov / 2`
+  ## Run velvet de novo assembly on reads that didn't map
   velveth velvetResults ${kmer} -shortPaired subseq.fa
-  #velvetg velvetResults -exp_cov $expCovLow -ins_length ${insSize}
-  velvetg velvetResults -exp_cov 30 -ins_length ${insSize}
+  velvetg velvetResults -exp_cov ${expCovUnmap} -ins_length ${insSize}
 
 
 
@@ -379,7 +366,7 @@ progSplitSeqLowCov=${15}/MHC_assembly/SplitSeqLowCov.jar
   cat ${velvetContigs} ${unass500OT} > ${superblockSeq}
 
   #remove short seq (<200)
-  echo "remove seq < 200 in ${superblockSeq}" >> $log
+  echo "remove seq < 100 in ${superblockSeq}" >> $log
 
 
   superblockSeq200=${superblockSeq%.fa}_100.fa
