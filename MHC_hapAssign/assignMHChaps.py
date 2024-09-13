@@ -111,10 +111,10 @@ def getC4hap(c4Genos):
         c4AB=''
         c4=c4.strip('\n')
         c4=re.split(',|\t', c4)
-        sample=c4[7]
+        sample=c4[0]
         print c4
-        c4A=int(c4[1])
-        c4B=int(c4[2])
+        c4A=int(c4[2])
+        c4B=int(c4[3])
         if c4A >0 and c4B > 0:
             c4AB='AB'
         elif c4A ==1 and c4B== 0:
@@ -129,8 +129,8 @@ def getC4hap(c4Genos):
             c4AB='NA'
         else:
             c4AB='CNV'
-        c4S=int(c4[4])
-        c4L=int(c4[3])
+        c4S=int(c4[5])
+        c4L=int(c4[4])
         c4LS=''
         if c4L>0 and c4S>0:
             c4LS='LS'
