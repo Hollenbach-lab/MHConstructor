@@ -17,7 +17,7 @@ def main():
     for file in os.listdir(directory):
         file = file.decode('utf-8')
         sid.append(file.split('_')[0])
-        toread = f'{alleles}/{file}'
+        toread = alleles + '/' + file
         allele = pd.read_csv(toread, sep = '\t', header = None)
         tmp1=(allele.iloc[0,0].split(' ')[0].split('*')[1])
 

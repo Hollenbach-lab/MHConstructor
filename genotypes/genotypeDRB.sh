@@ -8,7 +8,10 @@
 ## Edited: 9/11/24
 ## Authors: susenor and wadekj
 
+source activate
 source ../control.txt
+conda activate py35
+
 repoDir=${binDir}/MHConstructor
 progT1K=${repoDir}/tools/T1K/run-t1k
 ids="$(cat ${repoDir}/testID.txt)"
@@ -28,4 +31,4 @@ for i in $ids; do
     cd ../
 done
 
-python prepDRB.py ${repoDir}/genotypes/alleles
+python3 prepDRB.py ${repoDir}/genotypes/alleles

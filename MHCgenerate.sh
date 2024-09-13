@@ -10,6 +10,7 @@
 #### Import user editable variables from control file ###########
 source activate
 source ./control.txt
+conda activate amosPy27
 
 
 ##### DO NOT CHANGE THESE REPOSITORIES ########################################
