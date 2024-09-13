@@ -63,8 +63,11 @@ def getDRgenos(hlaGenos):
         hla=hla.strip('\n')
         hla=re.split(',|\t', hla)
         sample=hla[0]
-        drA=hla[1].split(':')[0]
-        drB=hla[2].split(':')[0]
+        #drA=hla[1].split(':')[0]
+        #drB=hla[2].split(':')[0]
+        drA=hla[1]
+        drB=hla[2]
+
         if drA=='X' or drA=='NA':
             drGenos[sample]['DRB1'].append('X')
         else:
@@ -111,8 +114,8 @@ def getC4hap(c4Genos):
         c4AB=''
         c4=c4.strip('\n')
         c4=re.split(',|\t', c4)
-        sample=c4[0]
-        print c4
+        sample=c4[0].split('_')[0]
+        
         c4A=int(c4[2])
         c4B=int(c4[3])
         if c4A >0 and c4B > 0:
@@ -163,8 +166,9 @@ def assignMHCHaps(hapDict,drHap,c4Hap):
                 out.write('%s\t%s\t%s\t%s\t%s\tFull\n'%(sample,mhc,dr, c4AB,c4LS))
 
             except:
-                mhc,mm=handleNovelHaps(hapDict,dr,c4AB,c4LS,sample)
-                out.write('%s\t%s\t%s\t%s\t%s\t%s\n'%(sample,mhc,dr, c4AB,c4LS,mm))
+                print 'Novel haplotypes, no BMH'
+                #mhc,mm=handleNovelHaps(hapDict,dr,c4AB,c4LS,sample)
+                #out.write('%s\t%s\t%s\t%s\t%s\t%s\n'%(sample,mhc,dr, c4AB,c4LS,mm))
     return 
 
 def handleNovelHaps(hapDict,dr,c4AB,c4LS,sample):
