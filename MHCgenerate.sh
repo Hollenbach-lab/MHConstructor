@@ -8,9 +8,9 @@
 ###########################################################
 
 #### Import user editable variables from control file ###########
-source activate
+
 source ./control.txt
-conda activate amosPy27
+source activate
 
 
 ##### DO NOT CHANGE THESE REPOSITORIES ########################################
@@ -34,13 +34,10 @@ mkdir ${samDir}
 ## If HLA-DRB1 and C4 genotypes have been created, assign BMH
 if [ ${assignHaps} -eq 1 ]
 then
-	if [ ! -d "${repoDir}/MHC_hapAssign/bestHaps" ]
-	then 
-		mkdir ${repoDir}/MHC_hapAssign/bestHaps
-		cd MHC_hapAssign
-		python assignMHChaps.py ${RefMHChaplotypes} ${HLAgenotypes} ${C4genotypes}
-		cd ..
-	fi
+	mkdir ${repoDir}/MHC_hapAssign/bestHaps
+	cd MHC_hapAssign
+	python assignMHChaps.py ${RefMHChaplotypes} ${HLAgenotypes} ${C4genotypes}
+	cd ..
 fi
 
 ## If no HLA-DRB1 and C4 genotypes, don't assign BMH and use the hg38 MHC reference as default

@@ -44,12 +44,17 @@ To specify various variables for your run, you can edit the `MHConstructor/contr
 HLA-DRB1 genotypes are required to determine each individual's guide BMH. If you already have these genotypes, provide the path to a csv or tab delimited file in the "HLAgenotypes=" field in the control file.
 
 If you would like to generate HLA-DRB1 genotypes, you can run the T1K (Song et al., 2023) software from within the MHConstructor container as follows:
+```
+cd genotypes/
+singularity exec ../container/mhconstructor.sif /bin/bash genotypeDRB.sh
+cd ..
+```
 
-Afterwards, update the control file "HLAgenotypes=" field with the path to the resulting genotype file.
+This will write a file called `genotypes/HLAgenotypes.csv`. Afterwards, update the control file "HLAgenotypes=" field with the absolute path to point to this file.
 
-To generate C4A/B, L/S and copy number genotypes with C4Investigator (Marin et al., 2024), run the following command within the MHConstructor container:
+To generate C4A/B, L/S and copy number genotypes, please use [C4Investigator](https://github.com/Hollenbach-lab/C4Investigator) (Marin et al., 2024). The repository has instruction to run C4Investigator.
 
-Afterwards, update the control file "C4genotypes=" field with the path to the resulting genotype file.
+Afterwards, update the control file "C4genotypes=" field with the absolute path to the resulting `C4Investigator_c4_summary.csv` file.
 
 For examples of acceptable file formats, please see the DRB1genotypes.txt and C4genotypes.txt files in the ./genotypes directory
 

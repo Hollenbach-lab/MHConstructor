@@ -47,17 +47,22 @@ def main():
 
 def createHapDict(haps):
     hapDict=defaultdict(lambda: defaultdict(dict))
-    refs=haps.next().strip('\n').split('\t')
-    drb=haps.next().strip('\n').split('\t')
-    C4AB=haps.next().strip('\n').split('\t')
-    C4LS=haps.next().strip('\n').split('\t')
+    # refs=haps.next().strip('\n').split('\t')
+    # drb=haps.next().strip('\n').split('\t')
+    # C4AB=haps.next().strip('\n').split('\t')
+    # C4LS=haps.next().strip('\n').split('\t')
+    refs=next(haps).strip('\n').split('\t')
+    drb=next(haps).strip('\n').split('\t')
+    C4AB=next(haps).strip('\n').split('\t')
+    C4LS=next(haps).strip('\n').split('\t')
     for i in range(1,len(refs)):
         hapDict[drb[i]][C4AB[i]][C4LS[i]]=refs[i]
     return hapDict
 
 def getDRgenos(hlaGenos):
     drGenos=defaultdict(lambda: defaultdict(list))
-    hlaGenos.next()
+    # hlaGenos.next()
+    next(hlaGenos)
     fails=[]
     for hla in hlaGenos:
         hla=hla.strip('\n')
@@ -109,7 +114,8 @@ def getDRHaps(drGenos):
 def getC4hap(c4Genos):
     c4Hap=defaultdict(lambda:defaultdict(str))
 
-    c4Genos.next()
+    # c4Genos.next()
+    next(c4Genos)
     for c4 in c4Genos:
         c4AB=''
         c4=c4.strip('\n')
@@ -159,16 +165,15 @@ def assignMHCHaps(hapDict,drHap,c4Hap):
         out=open(o,'w')
         
         for dr in drHap[sample]:
+            c4AB = list(c4Hap[sample].keys())[0]
+            c4LS = c4Hap[sample][c4AB]
             try:
-                c4AB=c4Hap[sample].keys()[0]
-                c4LS=c4Hap[sample][c4AB]
                 mhc=hapDict[dr][c4AB][c4LS]
                 out.write('%s\t%s\t%s\t%s\t%s\tFull\n'%(sample,mhc,dr, c4AB,c4LS))
 
             except:
-                print 'Novel haplotypes, no BMH'
-                #mhc,mm=handleNovelHaps(hapDict,dr,c4AB,c4LS,sample)
-                #out.write('%s\t%s\t%s\t%s\t%s\t%s\n'%(sample,mhc,dr, c4AB,c4LS,mm))
+                mhc,mm=handleNovelHaps(hapDict,dr,c4AB,c4LS,sample)
+                out.write('%s\t%s\t%s\t%s\t%s\t%s\n'%(sample,mhc,dr, c4AB,c4LS,mm))
     return 
 
 def handleNovelHaps(hapDict,dr,c4AB,c4LS,sample):
