@@ -29,7 +29,7 @@ HapB=${7}/MHC_generate/refMHChaps/${9}
 
 NThreads=8      # set the number of threads of every parallelizable step
 maxReadLength=155
-kmer=${13}	
+kmer=${14}	
 
 # paired-end libraries -------------------
 name=${1}           # set name of your species
