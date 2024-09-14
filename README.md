@@ -60,11 +60,10 @@ For examples of acceptable file formats, please see the example_HLAgenotypes.csv
 After you specified the inputs, you can run the following line from within the MHConstructor directory to execute the whole pipeline:
 
 ```
-singularity exec --bind <fastq_location> container/mhconstructor.sif /bin/bash MHCgenerate_v5.sh testID.txt
+singularity exec --bind <fastq_location> container/mhconstructor.sif /bin/bash MHCgenerate.sh testID.txt
 ```
-`testID.txt` specifies which sample you are running.
+`testID.txt` input txt file containing list of sample ID(s) that match to input .fastq files
 
-(TODO: script to automatically generate a testID.txt file from a given directory to ensure easier usage of MHConstructor)
 
 ## User Editable Variables
 - `binDir` - Location of software executables, eg: /home/kwade/bin
