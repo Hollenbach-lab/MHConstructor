@@ -1,0 +1,35 @@
+cff-version: 1.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: “Wade”
+  given-names: “Kristen”
+  orcid: "https://orcid.org/0000-0002-0338-5028"
+- family-names: “Suseno”
+  given-names: “Rayo”
+- family-names: “Kizer”
+  given-names: “Kerry”
+- family-names: “Williams”
+  given-names: “Jacqueline”
+- family-names: “Boquett”
+  given-names: “Juliano”
+- family-names: “Callier”
+  given-names: “Stacy”
+- family-names: “Pollock”
+  given-names: “Nick”
+- family-names: “Renschen”
+  given-names: “Adam”
+- family-names: “Santaniello”
+  given-names: “Adam”
+- family-names: “Oksenberg”
+  given-names: “Jorge”
+- family-names: “Norman”
+  given-names: “Paul”
+- family-names: “Augusto”
+  given-names: “Danillo”
+- family-names: “Hollenbach”
+  given-names: “Jill”
+title: “MHConstructor”
+version: 1.0
+doi: 10.5281/zenodo.13763874
+date-released: 2024-09-14
+url: "https://github.com/Hollenbach-lab/MHConstructor"
