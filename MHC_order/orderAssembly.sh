@@ -7,7 +7,7 @@
 # $2 - assembly fasta
 # $3 - AssemblyDir/merged/scaffolds
 # $4 - sampleID
-# $5 - repoDir
+# $5 - projectDir
 ragtag.py scaffold ../refMHC/${2}.fasta ${1} -r -o ${3}/RT_${2}
 ragtag.py patch ${3}/RT_${2}/ragtag.scaffold.fasta ../refMHC/${2}.fasta -o ${3}/RT_${2}
 
