@@ -49,14 +49,12 @@ cd genotypes/
 singularity exec ../container/mhconstructor.sif /bin/bash genotypeDRB.sh
 cd ..
 ```
-
 This will write a file called `genotypes/HLAgenotypes.csv`. Afterwards, update the control file "HLAgenotypes=" field with the absolute path to point to this file.
 
 To generate C4A/B, L/S and copy number genotypes, please use [C4Investigator](https://github.com/Hollenbach-lab/C4Investigator) (Marin et al., 2024). The repository has instruction to run C4Investigator.
-
 Afterwards, update the control file "C4genotypes=" field with the absolute path to the resulting `C4Investigator_c4_summary.csv` file.
 
-For examples of acceptable file formats, please see the DRB1genotypes.txt and C4genotypes.txt files in the ./genotypes directory
+For examples of acceptable file formats, please see the example_HLAgenotypes.csv and example_C4Investigator_c4_summary.csv files in the ./genotypes directory
 
 ### Run end-to-end pipeline
 After you specified the inputs, you can run the following line from within the MHConstructor directory to execute the whole pipeline:
@@ -105,4 +103,4 @@ The primary use of this pipeline is to process raw sequencing data and produce t
 These files represent the single, continuous sequence comprised of assembly contigs that RagTag (Alonge et al., 2022) was able to place against the BMH guide sequence, ie; consensus sequences. However, for each assembly, there will be contigs that were not able to be placed. These likely contain larger structural variants and putative novel sequences. As there is no straightforward, high throughput way to integrate these into the final consensus sequence, it is recommended that users investigate the additional contigs manually, post-hoc. These unplaced contigs can be found in the file:
 - MHConstructor/consensusHap/unplacedContigs/SampleID_BMH_RT_unPlaced.fasta
 
-There is a large amount of intermediate data generated during the assembly process that may be of interest to users for optimization and/or developing additional functionality. For an example results output directory, please visit:XXXXXXXX. Here, you will also find a detailed description of each of these files.
+There is a large amount of intermediate data generated during the assembly process that may be of interest to users for optimization and/or developing additional functionality. For an example results output directory, please visit our repository at the Center for Open Science https://osf.io/46y5k/. Here, you will also find a description of each of these files.
