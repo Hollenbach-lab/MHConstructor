@@ -1,11 +1,11 @@
 #!/bin/bash
 ## Wrapper script to obtain the DRB genotypes needed for MHConstructor to run
-## Usage: sh genotypeDRB.sh
+## Usage: sh genotypeDRB.sh ../testID.txt
 ## The fastq files location can be specified in ../control.txt
 ## The sample ID to run can be modified in ../testID.txt
 ## Output: a directory 'alleles' with all the T1K result and 'HLAgenotypes.csv' which processed
 ##         the result to a format that fits MHConstructor
-## Edited: 9/11/24
+## Edited: 10/16/24
 ## Authors: susenor and wadekj
 
 source activate
@@ -14,7 +14,7 @@ conda activate py35
 
 repoDir=${binDir}/MHConstructor
 progT1K=${repoDir}/tools/T1K/run-t1k
-ids="$(cat ${repoDir}/testID.txt)"
+ids="$(cat $1)"
 set -e
 
 for i in $ids; do

@@ -40,19 +40,22 @@ An `mhconstructor.sif` file will be created and ready to use!
 ## Usage Guide
 ### Updating user-editable variables
 To specify various variables for your run, you can edit the `MHConstructor/control.txt` file to your specific need. This is where you specify information such as the location of your data, the location of the output, and many more as described on the [User Editable Variables](#user-editable-variables) section below.
-### HLA-DRB1 and C4A/B genotyping
+### HLA-DRB1 genotyping
 HLA-DRB1 genotypes are required to determine each individual's guide BMH. If you already have these genotypes, provide the path to a csv or tab delimited file in the "HLAgenotypes=" field in the control file.
 
 If you would like to generate HLA-DRB1 genotypes, you can run the T1K (Song et al., 2023) software from within the MHConstructor container as follows:
 ```
 cd genotypes/
-singularity exec ../container/mhconstructor.sif /bin/bash genotypeDRB.sh
+singularity exec ../container/mhconstructor.sif /bin/bash genotypeDRB.sh testID.txt
 cd ..
 ```
-This will write a file called `genotypes/HLAgenotypes.csv`. Afterwards, update the control file "HLAgenotypes=" field with the absolute path to point to this file.
+`testID.txt` is an input txt file containing list of sample ID(s) that match to input .fastq files
 
-To generate C4A/B, L/S and copy number genotypes, please use [C4Investigator](https://github.com/Hollenbach-lab/C4Investigator) (Marin et al., 2024). The repository has instruction to run C4Investigator.
-Afterwards, update the control file "C4genotypes=" field with the absolute path to the resulting `C4Investigator_c4_summary.csv` file.
+This will write a file called `genotypes/HLAgenotypes.csv`. Afterwards, update the control file's "HLAgenotypes=" field with the absolute path to point to this file.
+
+### C4A/B genotyping
+To generate C4A/B, L/S and copy number genotypes, please use [C4Investigator](https://github.com/Hollenbach-lab/C4Investigator) (Marin et al., 2024).
+Once ran, update the control file's "C4genotypes=" field with the absolute path to the resulting `C4Investigator_c4_summary.csv` file.
 
 For examples of acceptable file formats, please see the example_HLAgenotypes.csv and example_C4Investigator_c4_summary.csv files in the ./genotypes directory
 
