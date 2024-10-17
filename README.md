@@ -2,7 +2,7 @@
 
 ## Project Description
 
-MHConstructor is an high-throughput, haplotype-informed, MHC-specific, short read de novo assembly method intended to further understand the role of MHC in human traits and disease studies. The full article for [MHConstructor can be found here.](https://www.biorxiv.org/content/10.1101/2024.05.20.595060v1)
+MHConstructor is an high-throughput, haplotype-informed, MHC-specific, short read de novo assembly method intended to further understand the role of MHC in human traits and disease studies. The full article for [MHConstructor can be found here.](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-024-03412-6)
 
 ## Installation Guide
 To obtain the project directory, the repository can be cloned using the following command:
@@ -106,3 +106,6 @@ These files represent the single, continuous sequence comprised of assembly cont
 - MHConstructor/consensusHap/unplacedContigs/SampleID_BMH_RT_unPlaced.fasta
 
 There is a large amount of intermediate data generated during the assembly process that may be of interest to users for optimization and/or developing additional functionality. For an example results output directory, please visit our repository at the Center for Open Science https://osf.io/46y5k/. Here, you will also find a description of each of these files.
+
+## Troubleshooting
+Please send a copy of your error message to kristen.wade@ucsf.edu or rayo.suseno@ucsf.edu, or raise an issue in this repository. We would be happy to receive community feedback as we aim to continuously improve our pipeline.
